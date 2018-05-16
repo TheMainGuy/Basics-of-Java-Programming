@@ -1,0 +1,10 @@
+package hr.fer.zemris.java.gui.calc.elements;
+
+public class CalcReverseButton extends CalcBinaryOperationButton{
+
+  /**
+   * Serial version UID.
+   */
+  private static final long serialVersionUID = 1L;
+
+}

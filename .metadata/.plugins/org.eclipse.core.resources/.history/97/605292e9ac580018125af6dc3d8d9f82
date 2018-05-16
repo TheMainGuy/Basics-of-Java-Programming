@@ -1,0 +1,69 @@
+package hr.fer.zemris.java.gui.charts;
+
+import java.util.List;
+
+public class BarChart {
+  private List<XYValue> values;
+  private String xDescription;
+  private String yDescription;
+  private int minY;
+  private int maxY;
+  private int space;
+
+  public BarChart(List<XYValue> values, String xDescription, String yDescription, int minY, int maxY, int space) {
+    super();
+    this.values = values;
+    this.xDescription = xDescription;
+    this.yDescription = yDescription;
+    this.minY = minY;
+    this.maxY = maxY;
+    this.space = space;
+  }
+
+  /**
+   * Returns bar values.
+   * 
+   * @return the values
+   */
+  public List<XYValue> getValues() {
+    return values;
+  }
+
+  /**
+   * Returns description 
+   * 
+   * @return the xDescription
+   */
+  public String getxDescription() {
+    return xDescription;
+  }
+
+  /**
+   * @return the yDescription
+   */
+  public String getyDescription() {
+    return yDescription;
+  }
+
+  /**
+   * @return the minY
+   */
+  public int getMinY() {
+    return minY;
+  }
+
+  /**
+   * @return the maxY
+   */
+  public int getMaxY() {
+    return maxY;
+  }
+
+  /**
+   * @return the space
+   */
+  public int getSpace() {
+    return space;
+  }
+
+}

@@ -1,0 +1,12 @@
+package hr.fer.zemris.java.gui.calc;
+
+import javax.swing.JLabel;
+
+public class CalcDisplay extends JLabel {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+
+}

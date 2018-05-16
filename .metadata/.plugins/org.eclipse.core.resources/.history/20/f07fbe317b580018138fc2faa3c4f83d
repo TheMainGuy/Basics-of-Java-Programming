@@ -1,0 +1,27 @@
+package hr.fer.zemris.java.gui.calc.elements;
+
+import java.util.function.DoubleBinaryOperator;
+
+import hr.fer.zemris.java.gui.calc.CalcModel;
+
+/**
+ * Implements binary operation button which, when pressed, executes binary
+ * operation using operands and operator stored in given {@link CalcModel}
+ * object.
+ * 
+ * @author tin
+ *
+ */
+public class CalcBinaryOperationButton {
+
+  /**
+   * Constructor.
+   * 
+   * @param buttonText button text which is displayed
+   * @param unaryOperator operation which pressing this button will execute
+   * @param calculator {@link CalcModel} object in which result is stored
+   */
+  public CalcBinaryOperationButton(String buttonText, DoubleBinaryOperator binaryOperator, CalcModel calculator) {
+    // TODO Auto-generated constructor stub
+  }
+}

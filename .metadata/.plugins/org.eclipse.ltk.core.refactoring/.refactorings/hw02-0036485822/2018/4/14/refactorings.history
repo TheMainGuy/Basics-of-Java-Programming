@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;ArrayIndexedCollection.java&apos; to &apos;hw04-0036485822/src/main/java&apos;&#x0A;- Original project: &apos;hw02-0036485822&apos;&#x0A;- Destination element: &apos;hw04-0036485822/src/main/java&apos;&#x0A;- Original element: &apos;hr.fer.zemris.java.custom.collections.ArrayIndexedCollection.java&apos;" description="Copy compilation unit" destination="=hw04-0036485822/src\/main\/java" element1="/src\/main\/java&lt;hr.fer.zemris.java.custom.collections{ArrayIndexedCollection.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1522715416107" units="1" version="1.0"/>
+</session>

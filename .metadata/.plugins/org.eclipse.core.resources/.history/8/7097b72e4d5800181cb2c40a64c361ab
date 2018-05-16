@@ -1,0 +1,24 @@
+package hr.fer.zemris.java.gui.calc;
+
+import java.awt.Color;
+
+import javax.swing.JLabel;
+
+public class CalcDisplay extends JLabel implements CalcValueListener{
+  
+  public CalcDisplay() {
+    setBackground(Color.YELLOW);
+    setText("0");
+  }
+  /**
+   * Serial version UID.
+   */
+  private static final long serialVersionUID = 1L;
+
+  @Override
+  public void valueChanged(CalcModel model) {
+    setText(model.toString());
+    
+  }
+
+}

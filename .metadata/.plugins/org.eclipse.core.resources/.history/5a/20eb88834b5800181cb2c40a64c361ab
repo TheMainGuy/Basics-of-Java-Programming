@@ -1,0 +1,90 @@
+package hr.fer.zemris.java.gui.calc;
+
+import java.util.function.DoubleBinaryOperator;
+
+/**
+ * Defines calculator model used to implement calculator. Model stores current
+ * number which is displayed on the calculator screen, current operand which is
+ * previous number stored after user pressed operator button and current
+ * operator which is stored when user presses the operator button.
+ * 
+ * @author tin
+ *
+ */
+public interface CalcModel {
+  /**
+   * Adds {@link CalcValueListener} which will be notified upon all changes in
+   * this {@link CalcModel} object.
+   * 
+   * @param l listener to be added
+   */
+  void addCalcValueListener(CalcValueListener l);
+
+  /**
+   * Removes {@link CalcValueListener} from list of added listeners.
+   * 
+   * @param l listener to be removed
+   */
+  void removeCalcValueListener(CalcValueListener l);
+
+  /**
+   * Converts current number to string.
+   * 
+   * @return current number converted to string
+   */
+  String toString();
+
+  /**
+   * Returns current number.
+   * 
+   * @return current number
+   */
+  double getValue();
+
+  /**
+   * Sets current number value.
+   * 
+   * @param value value to be set
+   */
+  void setValue(double value);
+
+  /**
+   * Clears current number value.
+   */
+  void clear();
+
+  /**
+   * Clears current number, current operand and current operator values.
+   */
+  void clearAll();
+
+  /**
+   * Negates current number. If there is no current number, does nothing.
+   */
+  void swapSign();
+
+  /**
+   * Inserts decimal point. If decimal point already exist, does nothing.
+   */
+  void insertDecimalPoint();
+
+  /**
+   * Appends digit to current number. If number is already 0 without decimal
+   * point, does nothing.
+   * 
+   * @param digit digit to be
+   */
+  void insertDigit(int digit);
+
+  boolean isActiveOperandSet();
+
+  double getActiveOperand();
+
+  void setActiveOperand(double activeOperand);
+
+  void clearActiveOperand();
+
+  DoubleBinaryOperator getPendingBinaryOperation();
+
+  void setPendingBinaryOperation(DoubleBinaryOperator op);
+}

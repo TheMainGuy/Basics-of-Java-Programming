@@ -1,0 +1,17 @@
+package hr.fer.zemris.java.gui.calc.elements;
+
+/**
+ * Implements unary operation button which, when pressed, executes unary
+ * operation defined.
+ * 
+ * @author tin
+ *
+ */
+public class CalcUnaryOperationButton extends JButton {
+  public CalcUnaryOperationButton(String buttonText) {
+    super(buttonText);
+    this.addActionListener(a -> {
+      calculator.insertDigit(buttonDigit);
+    });
+  }
+}

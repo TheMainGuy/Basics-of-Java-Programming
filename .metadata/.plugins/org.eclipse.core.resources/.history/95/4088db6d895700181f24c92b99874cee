@@ -1,0 +1,53 @@
+package hr.fer.zemris.java.gui.layouts;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+
+public class CalcLayoutShowDemo {
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      JFrame frame = new TestCalc();
+      frame.pack();
+      frame.setVisible(true);
+    });
+  }
+
+  private static class TestCalc extends JFrame {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+    public TestCalc() {
+      setLocation(20, 50);
+      setSize(300, 200);
+      setTitle("Moj prvi prozor!");
+      setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+      initGUI();
+    }
+
+    private void initGUI() {
+      Container cp = getContentPane();
+      cp.setLayout(new BorderLayout());
+
+      JLabel labela = new JLabel("<html>Ovo je <u><font color='red'>Labela</font></u></html>");
+      labela.setOpaque(true);
+      labela.setBackground(Color.YELLOW);
+      labela.setHorizontalAlignment(SwingConstants.CENTER);
+
+      JButton button = new JButton("Gumb");
+
+      cp.add(labela, BorderLayout.CENTER);
+      cp.add(button, BorderLayout.PAGE_END);
+    }
+
+  }
+}

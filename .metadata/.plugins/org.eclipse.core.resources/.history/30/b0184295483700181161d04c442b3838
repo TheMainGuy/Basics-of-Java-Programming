@@ -1,0 +1,22 @@
+package hr.fer.zemris.lsystems.impl.commands;
+
+import hr.fer.zemris.lsystems.Painter;
+import hr.fer.zemris.lsystems.impl.Command;
+import hr.fer.zemris.lsystems.impl.Context;
+
+/**
+ * Class which implements scale command for turtle state. It scales turtle state
+ * scale factor by factor factor.
+ * 
+ * @author tin
+ *
+ */
+public class ScaleCommand implements Command {
+
+  @Override
+  public void execute(Context ctx, Painter painter) {
+    // TODO Auto-generated method stub
+
+  }
+
+}

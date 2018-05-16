@@ -1,0 +1,94 @@
+package hr.fer.zemris.java.raytracer.model;
+
+public class Sphere extends GraphicalObject {
+
+  Point3D center;
+  double radius;
+  double kdr;
+  double kdg;
+  double kdb;
+  double krr;
+  double krg;
+  double krb;
+  double krn;
+
+  public Sphere(Point3D center, double radius, double kdr, double kdg, double kdb, double krr, double krg, double krb,
+      double krn) {
+    super();
+    this.center = center;
+    this.radius = radius;
+    this.kdr = kdr;
+    this.kdg = kdg;
+    this.kdb = kdb;
+    this.krr = krr;
+    this.krg = krg;
+    this.krb = krb;
+    this.krn = krn;
+  }
+
+  @Override
+  public RayIntersection findClosestRayIntersection(Ray ray) {
+    Point3D rayStart = ray.start;
+    Point3D direction = ray.direction;
+    Point3D vectorToCenter = center.sub(rayStart);
+    
+  }
+  
+  private class RayIntersectionImpl extends RayIntersection{
+
+    protected RayIntersectionImpl(Point3D point, double distance, boolean outer) {
+      super(point, distance, outer);
+      // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public Point3D getNormal() {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public double getKdr() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public double getKdg() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public double getKdb() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public double getKrr() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public double getKrg() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public double getKrb() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public double getKrn() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+    
+  }
+
+}

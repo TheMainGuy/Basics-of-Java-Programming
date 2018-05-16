@@ -1,0 +1,111 @@
+package hr.fer.zemris.java.gui.calc;
+
+import java.util.function.DoubleBinaryOperator;
+
+public class CalcModelImpl implements CalcModel {
+  private String currentNumber = null;
+  private double activeOperand = Double.NaN;
+  private DoubleBinaryOperator binaryOperator = null;
+
+  @Override
+  public void addCalcValueListener(CalcValueListener l) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void removeCalcValueListener(CalcValueListener l) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public String toString() {
+    return currentNumber == null ? "0" : currentNumber;
+  }
+
+  @Override
+  public double getValue() {
+    return currentNumber == null ? 0.0 : Double.parseDouble(currentNumber);
+  }
+
+  @Override
+  public void setValue(double value) {
+    currentNumber = (value == Double.NaN || value == Double.POSITIVE_INFINITY || value == Double.NEGATIVE_INFINITY)
+        ? currentNumber
+        : Double.toString(value);
+
+  }
+
+  @Override
+  public void clear() {
+    currentNumber = null;
+  }
+
+  @Override
+  public void clearAll() {
+    currentNumber = null;
+    activeOperand = Double.NaN;
+    binaryOperator = null;
+  }
+
+  @Override
+  public void swapSign() {
+    currentNumber = currentNumber == null ? currentNumber : "-" + currentNumber;
+  }
+
+  @Override
+  public void insertDecimalPoint() {
+    if(currentNumber == null) {
+      currentNumber = "0.";
+      return;
+    }
+    currentNumber = currentNumber.indexOf('.') == -1 ? currentNumber + '.' : currentNumber;  
+  }
+
+  @Override
+  public void insertDigit(int digit) {
+    if(currentNumber == null && digit != 0) {
+      currentNumber = "";
+    }
+    else if(currentNumber == null && digit == 0 || Double.parseDouble(currentNumber) == 0) {
+      return;
+    }
+    currentNumber += digit;
+
+  }
+
+  @Override
+  public boolean isActiveOperandSet() {
+    return Double.isNaN(activeOperand) ? false : true;
+  }
+
+  @Override
+  public double getActiveOperand() {
+    if(isActiveOperandSet()) {
+      return activeOperand;
+    }
+    throw new IllegalStateException("Active operand is not set.");
+  }
+
+  @Override
+  public void setActiveOperand(double activeOperand) {
+    this.activeOperand = activeOperand;
+  }
+
+  @Override
+  public void clearActiveOperand() {
+    activeOperand = Double.NaN;
+  }
+
+  @Override
+  public DoubleBinaryOperator getPendingBinaryOperation() {
+    return binaryOperator;
+  }
+
+  @Override
+  public void setPendingBinaryOperation(DoubleBinaryOperator op) {
+    binaryOperator = op;
+  }
+
+}

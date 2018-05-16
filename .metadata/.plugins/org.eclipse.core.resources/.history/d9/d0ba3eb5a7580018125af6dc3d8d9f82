@@ -1,0 +1,13 @@
+package hr.fer.zemris.java.gui.charts;
+
+import java.util.List;
+
+public class BarChart {
+  List<XYValue> values;
+
+  public BarChart(List<XYValue> values) {
+    this.values = values;
+  }
+  
+  
+}

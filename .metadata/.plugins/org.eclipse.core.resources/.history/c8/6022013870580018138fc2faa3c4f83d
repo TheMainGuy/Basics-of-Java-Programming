@@ -1,0 +1,16 @@
+package hr.fer.zemris.java.gui.calc.elements;
+
+import javax.swing.JButton;
+
+public class CalcNumberButton extends JButton {
+  /**
+   * Serial version UID.
+   */
+  private static final long serialVersionUID = 1L;
+
+  public CalcNumberButton(int buttonDigit) {
+    super(Integer.toString(buttonDigit));
+  }
+  
+  
+}

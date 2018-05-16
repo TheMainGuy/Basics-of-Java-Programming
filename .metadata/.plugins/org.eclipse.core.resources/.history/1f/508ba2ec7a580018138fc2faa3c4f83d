@@ -1,0 +1,15 @@
+package hr.fer.zemris.java.gui.calc.elements;
+
+import hr.fer.zemris.java.gui.calc.CalcModel;
+
+/**
+ * Implements binary operation button which, when pressed, executes binary
+ * operation using operands and operator stored in given {@link CalcModel}
+ * object.
+ * 
+ * @author tin
+ *
+ */
+public class CalcBinaryOperationButton {
+
+}

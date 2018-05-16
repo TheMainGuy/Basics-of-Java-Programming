@@ -1,0 +1,38 @@
+package hr.fer.zemris.java.raytracer.model;
+
+public class Sphere extends GraphicalObject {
+
+  Point3D center;
+  double radius;
+  double kdr;
+  double kdg;
+  double kdb;
+  double krr;
+  double krg;
+  double krb;
+  double krn;
+
+  public Sphere(Point3D center, double radius, double kdr, double kdg, double kdb, double krr, double krg, double krb,
+      double krn) {
+    super();
+    this.center = center;
+    this.radius = radius;
+    this.kdr = kdr;
+    this.kdg = kdg;
+    this.kdb = kdb;
+    this.krr = krr;
+    this.krg = krg;
+    this.krb = krb;
+    this.krn = krn;
+  }
+  
+  @Override
+  public RayIntersection findClosestRayIntersection(Ray ray) {
+    Point3D rayStart = ray.start;
+    Point3D direction = ray.direction;
+    RayIntersection intersection;
+    };
+    
+  }
+
+}

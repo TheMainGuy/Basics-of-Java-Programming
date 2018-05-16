@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="653" key="DIALOG_X_ORIGIN"/>
+		<item value="399" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="ctg" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="sin"/>
+			<item value="calculatorModel"/>
+			<item value="system.out"/>
+			<item value="toS"/>
+			<item value="row"/>
+			<item value="JLabel"/>
+			<item value="preferredSize"/>
+			<item value="addImpl("/>
+			<item value="addImpl"/>
+			<item value="add("/>
+			<item value="add"/>
+			<item value="firstIntersection"/>
+			<item value="NAN"/>
+			<item value="angle"/>
+			<item value="translate"/>
+		</list>
+		<list key="replacehistory">
+			<item value="ctg"/>
+			<item value="calculator"/>
+			<item value="column"/>
+			<item value="JButton"/>
+			<item value="componentSize"/>
+			<item value="intersection2"/>
+			<item value="add"/>
+			<item value="Vector3"/>
+			<item value="number2.get\(\1\)"/>
+			<item value="number2"/>
+			<item value="module"/>
+			<item value="Complex"/>
+			<item value="args.get(1)"/>
+			<item value="args.get(0)"/>
+			<item value="static final"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="338" key="DIALOG_WIDTH"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<item value="434" key="DIALOG_HEIGHT"/>
+		<item value="1169" key="DIALOG_X_ORIGIN"/>
+		<item value="191" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

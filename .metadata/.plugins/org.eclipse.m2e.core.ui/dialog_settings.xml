@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+		<list key="ciManagementUrl">
+		</list>
+		<list key="ciManagementSystem">
+		</list>
+		<list key="issueManagementSystem">
+		</list>
+		<list key="issueManagementUrl">
+		</list>
+	</section>
+	<section name="MavenProjectImportWizardPage">
+		<list key="rootDirectory">
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw10-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw09-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw07-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw06-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw05-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw04-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw03-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw02-0036485822"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw01-0036485822"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
+</section>

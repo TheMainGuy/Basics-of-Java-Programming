@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Vector2D.java&apos; to &apos;hw09-0036485822/src/main/java/hr.fer.zemrirs.math&apos;&#x0A;- Original project: &apos;hw04-0036485822&apos;&#x0A;- Destination element: &apos;hw09-0036485822/src/main/java/hr.fer.zemrirs.math&apos;&#x0A;- Original element: &apos;hr.fer.zemris.math.Vector2D.java&apos;" description="Copy compilation unit" destination="=hw09-0036485822/src\/main\/java&lt;hr.fer.zemrirs.math" element1="/src\/main\/java&lt;hr.fer.zemris.math{Vector2D.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1525613044833" units="1" version="1.0"/>
+</session>
