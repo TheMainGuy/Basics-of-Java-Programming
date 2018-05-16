@@ -23,6 +23,7 @@ import hr.fer.zemris.java.gui.layouts.RCPosition;
 
 public class Calculator {
   private static Stack<Double> stack = new Stack<>();
+
   /**
    * Method which is called when program starts.
    * 
@@ -60,7 +61,7 @@ public class Calculator {
     }
 
     /**
-     * GUI initializer.
+     * Initializes GUI components.
      */
     private void initGUI() {
       CalcModel calculator = new CalcModelImpl();
@@ -104,7 +105,6 @@ public class Calculator {
       res.addActionListener(a -> calculator.clearAll());
       p.add(res, new RCPosition(2, 7));
 
-      
       JButton push = new JButton("push");
       push.addActionListener(a -> {
         stack.push(calculator.getValue());
@@ -116,20 +116,16 @@ public class Calculator {
         try {
           calculator.setValue(stack.pop());
         } catch (Exception e) {
-          JOptionPane.showMessageDialog(
-              this, 
-              "Empty stack!",
-              "Error",
-              JOptionPane.ERROR_MESSAGE);
-          }
+          JOptionPane.showMessageDialog(this, "Empty stack!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
       });
       p.add(pop, new RCPosition(4, 7));
-      
+
       JButton sign = new JButton("+/-");
       sign.addActionListener(a -> calculator.swapSign());
       p.add(sign, new RCPosition(5, 4));
-      
+
       JButton decimalSeparator = new JButton(".");
       decimalSeparator.addActionListener(a -> calculator.insertDecimalPoint());
       p.add(decimalSeparator, new RCPosition(5, 5));
@@ -144,7 +140,7 @@ public class Calculator {
      *          stored upon pressing buttons
      */
     private void addUnaryOperators(Container p, CalcModel calculator) {
-      
+
       CalcUnaryOperationButton inverse = new CalcUnaryOperationButton("1/x", "1/x", x -> 1 / x, x -> 1 / x, calculator);
       p.add(inverse, new RCPosition(2, 1));
 
@@ -179,18 +175,19 @@ public class Calculator {
       operations.add(cos);
       operations.add(tan);
       operations.add(ctg);
-      
-      CalcReverseButton power = new CalcReverseButton("x^n", "root", (x,n) -> Math.pow(x,n), (x,n) -> Math.pow(x, 1/n), calculator);
+
+      CalcReverseButton power = new CalcReverseButton("x^n", "root", (x, n) -> Math.pow(x, n),
+          (x, n) -> Math.pow(x, 1 / n), calculator);
       p.add(power, new RCPosition(5, 1));
-      
+
       JCheckBox reverse = new JCheckBox("inv");
       reverse.addActionListener(a -> {
-        for(CalcUnaryOperationButton operation : operations) {
+        for (CalcUnaryOperationButton operation : operations) {
           operation.reverse();
         }
         power.reverse();
       });
-      
+
       p.add(reverse, new RCPosition(5, 7));
     }
 

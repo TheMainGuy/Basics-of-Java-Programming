@@ -14,9 +14,21 @@ import java.util.function.DoubleBinaryOperator;
  *
  */
 public class CalcModelImpl implements CalcModel {
+  /**
+   * Current number displayed.
+   */
   private String currentNumber = null;
+  /**
+   * Stored number.
+   */
   private double activeOperand = Double.NaN;
+  /**
+   * Stored binary operator.
+   */
   private DoubleBinaryOperator binaryOperator = null;
+  /**
+   * Value listeners.
+   */
   private List<CalcValueListener> valueListeners = new ArrayList<>();
 
   @Override
@@ -26,12 +38,7 @@ public class CalcModelImpl implements CalcModel {
 
   @Override
   public void removeCalcValueListener(CalcValueListener l) {
-    for (int i = 0, n = valueListeners.size(); i < n; i++) {
-      if(valueListeners.get(i) == l) {
-        valueListeners.remove(i);
-        return;
-      }
-    }
+    valueListeners.remove(l);
   }
 
   @Override
@@ -153,7 +160,7 @@ public class CalcModelImpl implements CalcModel {
       valueListener.valueChanged(this);
     }
   }
-  
+
   /**
    * Helper method which removes .0 when called.
    */

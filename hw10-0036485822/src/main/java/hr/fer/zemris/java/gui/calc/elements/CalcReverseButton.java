@@ -6,6 +6,12 @@ import javax.swing.JButton;
 
 import hr.fer.zemris.java.gui.calc.CalcModel;
 
+/**
+ * Implements calculator button with reversable binary operation.
+ * 
+ * @author tin
+ *
+ */
 public class CalcReverseButton extends JButton {
   /**
    * Serial version UID.

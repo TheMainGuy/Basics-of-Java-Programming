@@ -9,11 +9,29 @@ import java.util.List;
  *
  */
 public class BarChart {
+  /**
+   * List of values.
+   */
   private List<XYValue> values;
+  /**
+   * X-axis description.
+   */
   private String xDescription;
+  /**
+   * Y-axis description.
+   */
   private String yDescription;
+  /**
+   * Minimal y.
+   */
   private int minY;
+  /**
+   * Maximal y.
+   */
   private int maxY;
+  /**
+   * Space between bars.
+   */
   private int space;
 
   /**

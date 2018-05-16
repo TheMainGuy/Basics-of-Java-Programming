@@ -1,6 +1,5 @@
 package hr.fer.zemris.java.gui.charts;
 
-import java.awt.Container;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -45,9 +44,9 @@ public class BarChartDemo extends JFrame {
         Integer.parseInt(lines.get(4)), Integer.parseInt(lines.get(5)));
 
     SwingUtilities.invokeLater(() -> {
-      BarChartFrame frame = new BarChartFrame(barChart);
+      JFrame frame = new JFrame();
       frame.setLocation(20, 20);
-      frame.setSize(400, 400);
+      frame.setSize(450, 360);
       frame.setTitle("Bar chart.");
       frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);;
       frame.setVisible(true);
@@ -58,44 +57,6 @@ public class BarChartDemo extends JFrame {
       
     });
 
-  }
-
-  /**
-   * {@link JFrame} which draws bar chart in its space.
-   * 
-   * @author tin
-   *
-   */
-  private static class BarChartFrame extends JFrame {
-    /**
-     * Serial version UID.
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Constructor.
-     * 
-     * @param barChart chart which will be drawn
-     */
-    public BarChartFrame(BarChart barChart) {
-      setLocation(20, 50);
-      setTitle("Bar chart.");
-      setSize(300, 300);
-      setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-      //initGUI(barChart);
-    }
-
-    /**
-     * Draws GUI.
-     * 
-     * @param barChart barChart which will be drawn
-     */
-    private void initGUI(BarChart barChart) {
-      Container p = getContentPane();
-      BarChartComponent barChartComponent = new BarChartComponent(barChart);
-      barChartComponent.paint(getGraphics());
-      p.add(barChartComponent);
-    }
   }
 
   /**
