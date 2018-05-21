@@ -54,7 +54,7 @@ public class Factorial {
    * @throws IllegalArgumentException if number is not in valid range
    */
   public static long calculateFactorial(int number) {
-    if(number < 0) {
+    if(number < 0 || number > 20) {
       throw new IllegalArgumentException(Integer.toString(number) + " is not in valid range.");
     }
     if(number == 1 || number == 0) {
