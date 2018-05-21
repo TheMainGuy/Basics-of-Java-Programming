@@ -52,10 +52,6 @@ public class CalcUnaryOperationButton extends JButton {
     this.buttonText = buttonText;
     this.reversedButtonText = reversedButtonText;
     this.addActionListener(a -> {
-      if(calculator.getPendingBinaryOperation() != null) {
-        calculator.setValue(
-            calculator.getPendingBinaryOperation().applyAsDouble(calculator.getActiveOperand(), calculator.getValue()));
-      }
       calculator.setValue(isReversed ? reversedUnaryOperator.applyAsDouble(calculator.getValue())
           : unaryOperator.applyAsDouble(calculator.getValue()));
     });
