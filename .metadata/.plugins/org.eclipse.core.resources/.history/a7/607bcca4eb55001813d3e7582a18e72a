@@ -1,8 +1,0 @@
-raphicalObject.class
-IRayTracerProducer.class
-IRayTracerResultObserver.class
-LightSource.class
-Point3D.class
-Ray.class
-RayIntersection.class
-Scene.class

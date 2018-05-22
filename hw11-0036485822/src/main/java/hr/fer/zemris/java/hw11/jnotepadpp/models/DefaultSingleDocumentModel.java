@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import hr.fer.zemris.java.hw11.jnotepadpp.listeners.SingleDocumentListener;
 
@@ -51,6 +53,23 @@ public class DefaultSingleDocumentModel implements SingleDocumentModel {
     textArea = new JTextArea(text);
     modified = false;
     listeners = new ArrayList<>();
+    textArea.getDocument().addDocumentListener(new DocumentListener() {
+      
+      @Override
+      public void removeUpdate(DocumentEvent arg0) {
+        setModified(true);
+        
+      }
+      
+      @Override
+      public void insertUpdate(DocumentEvent arg0) {
+        setModified(true);
+      }
+      
+      @Override
+      public void changedUpdate(DocumentEvent arg0) {
+      }
+    });
   }
 
   @Override
@@ -68,7 +87,8 @@ public class DefaultSingleDocumentModel implements SingleDocumentModel {
     if(path == null) {
       throw new NullPointerException("Path can not be null.");
     }
-    if(!filePath.equals(path)) {
+    
+    if(filePath == null || !filePath.equals(path)) {
       filePath = path;
       notifyDocumentListeners(l -> {
         l.documentFilePathUpdated(this);

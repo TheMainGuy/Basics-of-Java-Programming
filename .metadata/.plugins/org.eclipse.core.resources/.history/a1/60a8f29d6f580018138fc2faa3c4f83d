@@ -1,9 +1,0 @@
-package hr.fer.zemris.java.gui.calc.elements;
-
-import javax.swing.JButton;
-
-public class CalcNumberButton extends JButton {
-  public CalcNumberButton(int buttonDigit) {
-    
-  }
-}

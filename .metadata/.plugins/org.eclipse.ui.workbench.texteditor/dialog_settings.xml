@@ -6,12 +6,19 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="," key="selection"/>
+		<item value="listener" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="listener"/>
+			<item value="statisticalInfo"/>
+			<item value="closeDocument"/>
+			<item value="saveDoc"/>
+			<item value="openDocumentAction"/>
+			<item value="model"/>
+			<item value="Multiple"/>
 			<item value=","/>
 			<item value="sin"/>
 			<item value="calculatorModel"/>
@@ -20,15 +27,12 @@
 			<item value="row"/>
 			<item value="JLabel"/>
 			<item value="preferredSize"/>
-			<item value="addImpl("/>
-			<item value="addImpl"/>
-			<item value="add("/>
-			<item value="add"/>
-			<item value="firstIntersection"/>
-			<item value="NAN"/>
-			<item value="angle"/>
 		</list>
 		<list key="replacehistory">
+			<item value="exit"/>
+			<item value="statisticalInfo"/>
+			<item value="closeDoc"/>
+			<item value="newDocumentAction"/>
 			<item value="ctg"/>
 			<item value="calculator"/>
 			<item value="column"/>
@@ -40,10 +44,6 @@
 			<item value="number2.get\(\1\)"/>
 			<item value="number2"/>
 			<item value="module"/>
-			<item value="Complex"/>
-			<item value="args.get(1)"/>
-			<item value="args.get(0)"/>
-			<item value="static final"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
