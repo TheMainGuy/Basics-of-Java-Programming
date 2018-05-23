@@ -1,10 +1,8 @@
 package hr.fer.zemris.java.hw11.jnotepadpp;
 
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -51,12 +49,6 @@ class Clock extends JComponent {
   protected void paintComponent(Graphics g) {
     Insets ins = getInsets();
     Dimension dim = getSize();
-    g.setColor(getForeground());
-    
-    FontMetrics fm = g.getFontMetrics();
-    int w = fm.stringWidth(time);
-    int h = fm.getAscent();
-    //ins.left + (dim.width-ins.left-ins.right-w)/2
-    g.drawString(time, dim.width - ins.left - g.getFontMetrics().stringWidth(time) , dim.height-ins.bottom-(dim.height-ins.top-ins.bottom-h)/2);
+    g.drawString(time, dim.width - ins.left - g.getFontMetrics().stringWidth(time) , dim.height-ins.bottom-(dim.height-ins.top-ins.bottom-g.getFontMetrics().getAscent())/2);
   }
 }

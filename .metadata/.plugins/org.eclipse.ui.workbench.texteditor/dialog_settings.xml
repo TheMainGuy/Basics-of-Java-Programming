@@ -6,12 +6,15 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="listener" key="selection"/>
+		<item value="hrLan" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="enLan"/>
+			<item value="exitAction"/>
+			<item value="changeList"/>
 			<item value="listener"/>
 			<item value="statisticalInfo"/>
 			<item value="closeDocument"/>
@@ -24,11 +27,11 @@
 			<item value="calculatorModel"/>
 			<item value="system.out"/>
 			<item value="toS"/>
-			<item value="row"/>
-			<item value="JLabel"/>
-			<item value="preferredSize"/>
 		</list>
 		<list key="replacehistory">
+			<item value="hrLan"/>
+			<item value="deLan"/>
+			<item value="enLanguageAction"/>
 			<item value="exit"/>
 			<item value="statisticalInfo"/>
 			<item value="closeDoc"/>
@@ -41,9 +44,6 @@
 			<item value="intersection2"/>
 			<item value="add"/>
 			<item value="Vector3"/>
-			<item value="number2.get\(\1\)"/>
-			<item value="number2"/>
-			<item value="module"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

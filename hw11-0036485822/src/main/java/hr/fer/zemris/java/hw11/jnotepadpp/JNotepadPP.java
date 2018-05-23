@@ -1,6 +1,7 @@
 package hr.fer.zemris.java.hw11.jnotepadpp;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -33,6 +34,9 @@ import javax.swing.event.ChangeListener;
 
 import hr.fer.zemris.java.hw11.jnotepadpp.listeners.MultipleDocumentListener;
 import hr.fer.zemris.java.hw11.jnotepadpp.listeners.SingleDocumentListener;
+import hr.fer.zemris.java.hw11.jnotepadpp.local.FormLocalizationProvider;
+import hr.fer.zemris.java.hw11.jnotepadpp.local.LJMenu;
+import hr.fer.zemris.java.hw11.jnotepadpp.local.LocalizationProvider;
 import hr.fer.zemris.java.hw11.jnotepadpp.models.DefaultMultipleDocumentModel;
 import hr.fer.zemris.java.hw11.jnotepadpp.models.SingleDocumentModel;
 
@@ -45,6 +49,7 @@ import hr.fer.zemris.java.hw11.jnotepadpp.models.SingleDocumentModel;
 public class JNotepadPP extends JFrame {
   private DefaultMultipleDocumentModel model;
   private final Clock clock = new Clock();
+  private FormLocalizationProvider flp;
   /**
    * Serial version UID.
    */
@@ -52,6 +57,7 @@ public class JNotepadPP extends JFrame {
 
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {
+      LocalizationProvider.getInstance().setLanguage("en");
       new JNotepadPP();
     });
   }
@@ -65,6 +71,8 @@ public class JNotepadPP extends JFrame {
     setSize(600, 600);
     setVisible(true);
     setTitle("JNotepad++");
+    flp = new FormLocalizationProvider(LocalizationProvider.getInstance(), this);
+    
     this.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent arg0) {
@@ -111,19 +119,28 @@ public class JNotepadPP extends JFrame {
     createActions();
     createMenus();
     createToolbars();
-
   }
 
+  /**
+   * Creates status bar. Status bar shows length of current doocument, caret
+   * coordinate and selection length and clock showing current date and time.
+   */
   private void createStatusBar() {
     JPanel statusBar = new JPanel();
     this.getContentPane().add(statusBar, BorderLayout.SOUTH);
-    statusBar.setLayout(new BorderLayout());
+    statusBar.setLayout(new GridLayout(1, 2));
     StatusBarInfo statusBarInfo = new StatusBarInfo();
+    JPanel leftSide = new JPanel();
+    JPanel rightSide = new JPanel();
+    leftSide.setLayout(new BorderLayout());
+    rightSide.setLayout(new BorderLayout());
+    statusBar.add(leftSide);
+    statusBar.add(rightSide);
     JLabel lengthLabel = new JLabel("length :");
-    statusBar.add(lengthLabel, BorderLayout.WEST);
+    leftSide.add(lengthLabel, BorderLayout.WEST);
     JLabel caretInfoLabel = new JLabel("Ln: Col: Sel:");
-    statusBar.add(clock);
-    statusBar.add(caretInfoLabel, BorderLayout.EAST);
+    rightSide.add(clock);
+    rightSide.add(caretInfoLabel, BorderLayout.WEST);
     SingleDocumentListener singleDocumentListener = new SingleDocumentListener() {
 
       @Override
@@ -212,7 +229,7 @@ public class JNotepadPP extends JFrame {
   private void createMenus() {
     JMenuBar menuBar = new JMenuBar();
 
-    JMenu fileMenu = new JMenu("File");
+    JMenu fileMenu = new LJMenu("file", flp);
     menuBar.add(fileMenu);
 
     fileMenu.add(new JMenuItem(newDocumentAction));
@@ -226,9 +243,15 @@ public class JNotepadPP extends JFrame {
 
     JMenu editMenu = new JMenu("Edit");
     menuBar.add(editMenu);
+    
+    JMenu languageMenu = new JMenu("Language");
+    menuBar.add(languageMenu);
+    languageMenu.add(new JMenuItem(enLanguageAction));
+    languageMenu.add(new JMenuItem(hrLanguageAction));
+    languageMenu.add(new JMenuItem(deLanguageAction));
+    
 
     this.setJMenuBar(menuBar);
-
   }
 
   /**
@@ -270,6 +293,21 @@ public class JNotepadPP extends JFrame {
     exitAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("ESCAPE"));
     exitAction.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_ESCAPE);
     exitAction.putValue(Action.SHORT_DESCRIPTION, "Used to exit JNotepad++.");
+    
+    enLanguageAction.putValue(Action.NAME, "en");
+    enLanguageAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control E"));
+    enLanguageAction.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_E);
+    enLanguageAction.putValue(Action.SHORT_DESCRIPTION, "Used to change language to English.");
+    
+    deLanguageAction.putValue(Action.NAME, "de");
+    deLanguageAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control R"));
+    deLanguageAction.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
+    deLanguageAction.putValue(Action.SHORT_DESCRIPTION, "Used to change language to German.");
+    
+    hrLanguageAction.putValue(Action.NAME, "hr");
+    hrLanguageAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control T"));
+    hrLanguageAction.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_T);
+    hrLanguageAction.putValue(Action.SHORT_DESCRIPTION, "Used to change language to Croatian.");
   }
 
   /**
@@ -461,6 +499,54 @@ public class JNotepadPP extends JFrame {
       }
       System.exit(0);
 
+    }
+  };
+  
+  /**
+   * Defines change language to English action. Changes language to English.
+   */
+  private final Action enLanguageAction = new AbstractAction() {
+    
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+      LocalizationProvider.getInstance().setLanguage("en");
+    }
+  };
+  
+  /**
+   * Defines change language to German action. Changes language to German.
+   */
+  private final Action deLanguageAction = new AbstractAction() {
+    
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+      LocalizationProvider.getInstance().setLanguage("de");
+    }
+  };
+  
+  /**
+   * Defines change language to Croatian action. Changes language to Croatian.
+   */
+  private final Action hrLanguageAction = new AbstractAction() {
+    
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+      LocalizationProvider.getInstance().setLanguage("hr");
     }
   };
 
