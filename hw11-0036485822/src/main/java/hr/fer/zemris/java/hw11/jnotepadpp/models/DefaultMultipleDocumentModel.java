@@ -53,12 +53,16 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
 
       @Override
       public void stateChanged(ChangeEvent arg0) {
+        SingleDocumentModel previousModel = currentDocument;
         if(getSelectedIndex() == -1) {
           currentDocument = null;
           return;
         }
         currentDocument = documents.get(getSelectedIndex());
-
+        notifyAllDocumentListeners(l -> {
+          l.currentDocumentChanged(previousModel, currentDocument);
+          return null;
+        });
       }
     });
   }
@@ -98,16 +102,8 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     }
 
     String text = new String(content, StandardCharsets.UTF_8);
-    currentDocument = new DefaultSingleDocumentModel(path, text);
-    documents.add(currentDocument);
-    this.addTab(path.getFileName().toString(), savedIcon, new JScrollPane(currentDocument.getTextComponent()));
-    setSelectedIndex(documents.size() - 1);
-
-    notifyAllDocumentListeners(l -> {
-      l.documentAdded(currentDocument);
-      return null;
-    });
-    return currentDocument;
+    
+    return addNewTab(new DefaultSingleDocumentModel(path, text));
   }
 
   @Override
@@ -207,6 +203,7 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
    * @return reference to model assigned to tab
    */
   private SingleDocumentModel addNewTab(SingleDocumentModel model) {
+    SingleDocumentModel previousModel = currentDocument;
     currentDocument = model;
     documents.add(currentDocument);
     String tabTitle = "Untitled.txt";
@@ -233,6 +230,7 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     setSelectedIndex(documents.size() - 1);
     notifyAllDocumentListeners(l -> {
       l.documentAdded(currentDocument);
+      l.currentDocumentChanged(previousModel, currentDocument);
       return null;
     });
     return currentDocument;

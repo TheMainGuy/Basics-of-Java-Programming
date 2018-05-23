@@ -58,6 +58,6 @@
 <fullyQualifiedTypeName name="java.awt.event.WindowListener"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
-<fullyQualifiedTypeName name="hr.fer.zemris.java.hw11.jnotepadpp.listeners.MultipleDocumentListener"/>
 <fullyQualifiedTypeName name="javax.swing.event.CaretListener"/>
+<fullyQualifiedTypeName name="hr.fer.zemris.java.hw11.jnotepadpp.listeners.MultipleDocumentListener"/>
 </qualifiedTypeNameHistroy>

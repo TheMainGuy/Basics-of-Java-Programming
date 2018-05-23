@@ -3,8 +3,8 @@ package hr.fer.zemris.java.hw11.jnotepadpp;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -15,19 +15,26 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import hr.fer.zemris.java.hw11.jnotepadpp.listeners.MultipleDocumentListener;
+import hr.fer.zemris.java.hw11.jnotepadpp.listeners.SingleDocumentListener;
 import hr.fer.zemris.java.hw11.jnotepadpp.models.DefaultMultipleDocumentModel;
+import hr.fer.zemris.java.hw11.jnotepadpp.models.SingleDocumentModel;
 
 /**
  * Implements text editor JNotepad++.
@@ -37,7 +44,7 @@ import hr.fer.zemris.java.hw11.jnotepadpp.models.DefaultMultipleDocumentModel;
  */
 public class JNotepadPP extends JFrame {
   private DefaultMultipleDocumentModel model;
-
+  private final Clock clock = new Clock();
   /**
    * Serial version UID.
    */
@@ -58,35 +65,11 @@ public class JNotepadPP extends JFrame {
     setSize(600, 600);
     setVisible(true);
     setTitle("JNotepad++");
-    this.addWindowListener(new WindowListener() {
-
-      @Override
-      public void windowOpened(WindowEvent arg0) {
-      }
-
-      @Override
-      public void windowIconified(WindowEvent arg0) {
-      }
-
-      @Override
-      public void windowDeiconified(WindowEvent arg0) {
-      }
-
-      @Override
-      public void windowDeactivated(WindowEvent arg0) {
-      }
-
+    this.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent arg0) {
+        clock.stop();
         exitAction.actionPerformed(new ActionEvent(this, 1, "dummy"));
-      }
-
-      @Override
-      public void windowClosed(WindowEvent arg0) {
-      }
-
-      @Override
-      public void windowActivated(WindowEvent arg0) {
       }
     });
 
@@ -106,7 +89,7 @@ public class JNotepadPP extends JFrame {
       System.out.println("Unable to initialize GUI. Exiting...");
       System.exit(1);
     }
-    
+
     this.getContentPane().add(model, BorderLayout.CENTER);
     model.addChangeListener(new ChangeListener() {
       @Override
@@ -123,13 +106,84 @@ public class JNotepadPP extends JFrame {
 
       }
     });
-    
-    JPanel statusBar = new JPanel();
-    this.getContentPane().add(statusBar, BorderLayout.SOUTH);
-    
+
+    createStatusBar();
     createActions();
     createMenus();
     createToolbars();
+
+  }
+
+  private void createStatusBar() {
+    JPanel statusBar = new JPanel();
+    this.getContentPane().add(statusBar, BorderLayout.SOUTH);
+    statusBar.setLayout(new BorderLayout());
+    StatusBarInfo statusBarInfo = new StatusBarInfo();
+    JLabel lengthLabel = new JLabel("length :");
+    statusBar.add(lengthLabel, BorderLayout.WEST);
+    JLabel caretInfoLabel = new JLabel("Ln: Col: Sel:");
+    statusBar.add(clock);
+    statusBar.add(caretInfoLabel, BorderLayout.EAST);
+    SingleDocumentListener singleDocumentListener = new SingleDocumentListener() {
+
+      @Override
+      public void documentModifyStatusUpdated(SingleDocumentModel model) {
+        statusBarInfo.setLength(model.getTextComponent().getText().length());
+      }
+
+      @Override
+      public void documentFilePathUpdated(SingleDocumentModel model) {
+      }
+    };
+
+    CaretListener caretListener = new CaretListener() {
+
+      @Override
+      public void caretUpdate(CaretEvent caret) {
+        String text = ((JTextArea) caret.getSource()).getText();
+        int length = text.length();
+        int dotPosition = caret.getDot();
+        int markPosition = caret.getMark();
+        lengthLabel.setText("length: " + length);
+        int lineCounter = 1;
+        int columnCounter = 0;
+        for (int i = 0; i < dotPosition; i++) {
+          columnCounter++;
+          if(text.charAt(i) == '\n') {
+            lineCounter++;
+            columnCounter = 0;
+          }
+        }
+        caretInfoLabel
+            .setText("Ln:" + lineCounter + " Col:" + columnCounter + " Sel:" + Math.abs(dotPosition - markPosition));
+      }
+    };
+
+    model.addMultipleDocumentListener(new MultipleDocumentListener() {
+
+      @Override
+      public void documentRemoved(SingleDocumentModel model) {
+
+      }
+
+      @Override
+      public void documentAdded(SingleDocumentModel model) {
+
+      }
+
+      @Override
+      public void currentDocumentChanged(SingleDocumentModel previousModel, SingleDocumentModel currentModel) {
+        if(previousModel != null) {
+          previousModel.removeSingleDocumentListener(singleDocumentListener);
+          previousModel.getTextComponent().removeCaretListener(caretListener);
+        }
+        if(currentModel != null) {
+          currentModel.addSingleDocumentListener(singleDocumentListener);
+          currentModel.getTextComponent().addCaretListener(caretListener);
+          lengthLabel.setText("length: " + currentModel.getTextComponent().getText().length());
+        }
+      }
+    });
 
   }
 
