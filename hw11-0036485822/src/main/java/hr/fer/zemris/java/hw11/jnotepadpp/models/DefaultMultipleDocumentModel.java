@@ -44,6 +44,12 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
   ImageIcon notSavedIcon;
   ImageIcon savedIcon;
 
+  /**
+   * Constructor.
+   * 
+   * @param notSavedIcon icon which will be displayed next to modified files
+   * @param savedIcon icon which will be displayed next to unmodified files
+   */
   public DefaultMultipleDocumentModel(ImageIcon notSavedIcon, ImageIcon savedIcon) {
     documents = new ArrayList<>();
     listeners = new ArrayList<>();
@@ -210,7 +216,11 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     if(model.getFilePath() != null) {
       tabTitle = model.getFilePath().getFileName().toString();
     }
-    this.addTab(tabTitle, savedIcon, new JScrollPane(currentDocument.getTextComponent()));
+    if(currentDocument.getFilePath() != null) {
+      this.addTab(tabTitle, savedIcon, new JScrollPane(currentDocument.getTextComponent()), currentDocument.getFilePath().toString());
+    } else {
+      this.addTab(tabTitle, savedIcon, new JScrollPane(currentDocument.getTextComponent()));
+    }
     currentDocument.addSingleDocumentListener(new SingleDocumentListener() {
       
       @Override
@@ -225,6 +235,9 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
       @Override
       public void documentFilePathUpdated(SingleDocumentModel model) {
         setTitleAt(documents.indexOf(model), model.getFilePath().getFileName().toString());
+        if(model.getFilePath() != null) {
+          setToolTipTextAt(documents.indexOf(model), model.getFilePath().toString());
+        }        
       }
     });
     setSelectedIndex(documents.size() - 1);
