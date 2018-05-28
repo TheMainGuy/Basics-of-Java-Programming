@@ -6,44 +6,44 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="hrLan" key="selection"/>
+		<item value="Add" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="enLan"/>
-			<item value="exitAction"/>
-			<item value="changeList"/>
-			<item value="listener"/>
-			<item value="statisticalInfo"/>
-			<item value="closeDocument"/>
-			<item value="saveDoc"/>
-			<item value="openDocumentAction"/>
-			<item value="model"/>
-			<item value="Multiple"/>
-			<item value=","/>
-			<item value="sin"/>
-			<item value="calculatorModel"/>
-			<item value="system.out"/>
-			<item value="toS"/>
+			<item value="add"/>
+			<item value="outputCoo"/>
+			<item value="persistentParameter"/>
+			<item value="sortDescend"/>
+			<item value="JOption"/>
+			<item value="jOption"/>
+			<item value="sortAscending"/>
+			<item value="paste"/>
+			<item value="editor"/>
+			<item value="statis"/>
+			<item value="info"/>
+			<item value="char"/>
+			<item value="copy"/>
+			<item value="hrLanguage"/>
+			<item value="singleDocumentListe"/>
 		</list>
 		<list key="replacehistory">
+			<item value="temporaryParameter"/>
+			<item value="unique"/>
+			<item value="sortDescending"/>
+			<item value="sortAscending"/>
+			<item value="textArea"/>
+			<item value="paste"/>
+			<item value="cut"/>
+			<item value="copy"/>
+			<item value="LJButton"/>
+			<item value="Button"/>
+			<item value=" LJMenuItem"/>
+			<item value="LJMenuItem"/>
+			<item value="MenuItem"/>
 			<item value="hrLan"/>
 			<item value="deLan"/>
-			<item value="enLanguageAction"/>
-			<item value="exit"/>
-			<item value="statisticalInfo"/>
-			<item value="closeDoc"/>
-			<item value="newDocumentAction"/>
-			<item value="ctg"/>
-			<item value="calculator"/>
-			<item value="column"/>
-			<item value="JButton"/>
-			<item value="componentSize"/>
-			<item value="intersection2"/>
-			<item value="add"/>
-			<item value="Vector3"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

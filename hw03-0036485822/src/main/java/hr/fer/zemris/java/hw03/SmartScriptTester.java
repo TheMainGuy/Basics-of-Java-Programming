@@ -20,14 +20,14 @@ public class SmartScriptTester {
 
   /**
    * Method which is called when program starts.
+   * 
    * @param args
    */
   public static void main(String[] args) {
     if(args.length != 1) {
       System.out.println("Only 1 argument expected.");
     }
-    
-    
+
     String docBody = null;
     try {
       docBody = new String(Files.readAllBytes(Paths.get(args[0])), StandardCharsets.UTF_8);
@@ -54,7 +54,9 @@ public class SmartScriptTester {
   }
 
   /**
-   * Method which reconstructs original document body from {@link SmartScriptParser} tree
+   * Method which reconstructs original document body from
+   * {@link SmartScriptParser} tree.
+   * 
    * @param node root node in tree
    * @return document body
    */
