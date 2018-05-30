@@ -220,11 +220,11 @@ public class Lexer {
    */
   private void tokenizeString() {
     StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("\"");
+    //stringBuilder.append("\"");
     currentIndex++;
     while (currentIndex < data.length) {
       if(data[currentIndex] == '\"') {
-        stringBuilder.append("\"");
+        //stringBuilder.append("\"");
         token = new Token(TokenType.STRING, stringBuilder.toString());
         currentIndex++;
         return;
@@ -239,23 +239,25 @@ public class Lexer {
           currentIndex += 2;
         }
         else if(data[currentIndex + 1] == 'n') {
-          stringBuilder.append("n");
+          stringBuilder.append("\n");
           currentIndex += 2;
         }
         else if(data[currentIndex + 1] == 'r') {
-          stringBuilder.append("r");
+          stringBuilder.append("\r");
           currentIndex += 2;
         }
         else if(data[currentIndex + 1] == 't') {
-          stringBuilder.append("t");
+          stringBuilder.append("\t");
           currentIndex += 2;
         }
         else {
           throw new LexerException("Symbol \\ must precede one of the following characters: \", \\, n, r, t.");
         }
+      } else {
+        stringBuilder.append(data[currentIndex]);
+        currentIndex++;
       }
-      stringBuilder.append(data[currentIndex]);
-      currentIndex++;
+      
     }
     throw new LexerException("\" must be closed with another \".");
   }

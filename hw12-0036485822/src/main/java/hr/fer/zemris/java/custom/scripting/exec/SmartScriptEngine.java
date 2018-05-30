@@ -36,9 +36,7 @@ public class SmartScriptEngine {
     private final String SIN_FUNCTION = "sin";
     private final String DECIMAL_NUMBER_FORMAT_FUNCTION = "decfmt";
     private final String DUPLICATE_FUNCTION = "dup";
-    private final String PUSH_FUNCTION = "push";
     private final String SWAP_FUNCTION = "swap";
-    private final String POP_FUNCTION = "pop";
     private final String SET_MIME_TYPE_FUNCTION = "setMimeType";
     private final String PARAM_GET_FUNCTION = "paramGet";
     private final String PERSISTENT_PARAM_GET_FUNCTION = "pparamGet";
@@ -65,7 +63,7 @@ public class SmartScriptEngine {
       multistack.push(variable, new ValueWrapper(node.getStartExpression().asText()));
       while (true) {
         double i = Double.parseDouble(multistack.peek(variable).getValue().toString());
-        if(i >= maxValue) {
+        if(i > maxValue) {
           multistack.pop(variable);
           break;
         }
@@ -110,13 +108,63 @@ public class SmartScriptEngine {
           String functionName = elements[i].asText().substring(1);
           if(functionName.equals(SIN_FUNCTION)) {
             double x = Double.parseDouble(temporaryStack.pop().toString());
-            x = Math.sin(x);
+            x = Math.sin(x * Math.PI / 180);
             temporaryStack.push(x);
           } else if(functionName.equals(DECIMAL_NUMBER_FORMAT_FUNCTION)) {
             DecimalFormat df = new DecimalFormat(temporaryStack.pop().toString());
             temporaryStack.push(df.format(Double.parseDouble(temporaryStack.pop().toString())));
           } else if(functionName.equals(SET_MIME_TYPE_FUNCTION)) {
             requestContext.setMimeType(temporaryStack.pop().toString());
+          } else if(functionName.equals(DUPLICATE_FUNCTION)) {
+            Object x = temporaryStack.pop();
+            temporaryStack.push(x);
+            temporaryStack.push(x);
+          } else if(functionName.equals(SWAP_FUNCTION)) {
+            Object x = temporaryStack.pop();
+            Object y = temporaryStack.pop();
+            temporaryStack.push(x);
+            temporaryStack.push(y);
+          } else if(functionName.equals(PARAM_GET_FUNCTION)) {
+            Object defaultValue = temporaryStack.pop();
+            String name = temporaryStack.pop().toString();
+            String value = requestContext.getParameter(name);
+            if(value == null) {
+              temporaryStack.push(defaultValue);
+            } else {
+              temporaryStack.push(value);
+            }
+          } else if(functionName.equals(PERSISTENT_PARAM_GET_FUNCTION)) {
+            Object defaultValue = temporaryStack.pop();
+            String name = temporaryStack.pop().toString();
+            String value = requestContext.getPersistentParameter(name);
+            if(value == null) {
+              temporaryStack.push(defaultValue);
+            } else {
+              temporaryStack.push(value);
+            }
+          } else if(functionName.equals(TEMPORARY_PARAM_GET_FUNCTION)) {
+            Object defaultValue = temporaryStack.pop();
+            String name = temporaryStack.pop().toString();
+            String value = requestContext.getTemporaryParameter(name);
+            if(value == null) {
+              temporaryStack.push(defaultValue);
+            } else {
+              temporaryStack.push(value);
+            }
+          } else if(functionName.equals(PERSISTENT_PARAM_SET_FUNCTION)) {
+            String name = temporaryStack.pop().toString();
+            String value = temporaryStack.pop().toString();
+            requestContext.setPersistentParameter(name, value);
+          } else if(functionName.equals(TEMPORARY_PARAM_SET_FUNCTION)) {
+            String name = temporaryStack.pop().toString();
+            String value = temporaryStack.pop().toString();
+            requestContext.setTemporaryParameter(name, value);
+          } else if(functionName.equals(PERSISTENT_PARAM_DELETE_FUNCTION)) {
+            String name = temporaryStack.pop().toString();
+            requestContext.removePersistentParameter(name);
+          } else if(functionName.equals(TEMPORARY_PARAM_DELETE_FUNCTION)) {
+            String name = temporaryStack.pop().toString();
+            requestContext.removeTemporaryParameter(name);
           }
         }
       }

@@ -136,7 +136,7 @@ public class SmartScriptParser {
       }
       else if(lexer.getToken().getType() == TokenType.INTEGER_NUMBER) {
         // Double number = (double) lexer.getToken().getValue();
-        elements[i] = new ElementConstantInteger((int) lexer.getToken().getValue());
+        elements[i] = new ElementConstantInteger(Integer.parseInt(lexer.getToken().getValue().toString()));
       }
       else if(lexer.getToken().getType() == TokenType.DOUBLE_NUMBER) {
         elements[i] = new ElementConstantDouble((double) lexer.getToken().getValue());
@@ -187,11 +187,11 @@ public class SmartScriptParser {
         elements[i] = new ElementFunction(token.getValue().toString());
       }
       else if(token.getType() == TokenType.DOUBLE_NUMBER) {
-        elements[i] = new ElementConstantDouble((double) token.getValue());
+        elements[i] = new ElementConstantDouble(Double.parseDouble(token.getValue().toString()));
       }
       else if(token.getType() == TokenType.INTEGER_NUMBER) {
         // Double number = (double) lexer.getToken().getValue();
-        elements[i] = new ElementConstantDouble((int) lexer.getToken().getValue());
+        elements[i] = new ElementConstantDouble(Integer.parseInt(token.getValue().toString()));
       }
       else if(token.getType() == TokenType.NAME) {
         elements[i] = new ElementVariable(token.getValue().toString());

@@ -6,12 +6,15 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Add" key="selection"/>
+		<item value="getProperty(" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="get("/>
+			<item value="properties"/>
+			<item value="main"/>
 			<item value="add"/>
 			<item value="outputCoo"/>
 			<item value="persistentParameter"/>
@@ -24,11 +27,10 @@
 			<item value="statis"/>
 			<item value="info"/>
 			<item value="char"/>
-			<item value="copy"/>
-			<item value="hrLanguage"/>
-			<item value="singleDocumentListe"/>
 		</list>
 		<list key="replacehistory">
+			<item value="getProperty("/>
+			<item value="serverProperties"/>
 			<item value="temporaryParameter"/>
 			<item value="unique"/>
 			<item value="sortDescending"/>
@@ -42,8 +44,6 @@
 			<item value=" LJMenuItem"/>
 			<item value="LJMenuItem"/>
 			<item value="MenuItem"/>
-			<item value="hrLan"/>
-			<item value="deLan"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

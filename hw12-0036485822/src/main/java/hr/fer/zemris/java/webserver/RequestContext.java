@@ -17,8 +17,9 @@ public class RequestContext {
   private int statusCode = 200;
   private String statusText = "OK";
   private String mimeType = "text/html";
+  Long contentLength = null;
   private Map<String, String> parameters;
-  private Map<String, String> temporaryParameters;
+  private Map<String, String> temporaryParameters = new HashMap<>();
   private Map<String, String> persistentParameters;
   private List<RCCookie> outputCookies;
   private boolean headerGenerated = false;
@@ -88,6 +89,20 @@ public class RequestContext {
       throw new RuntimeException("Header already generated.");
     }
     this.mimeType = mimeType;
+  }
+
+  /**
+   * Sets contentLength to given number. Throws exception if header is already
+   * generated.
+   * 
+   * @param contentLength content length to be set
+   * @throws RuntimeException if header is already generated
+   */
+  public void setContentLength(long contentLength) {
+    if(headerGenerated) {
+      throw new RuntimeException("Header already generated.");
+    }
+    this.contentLength = contentLength;
   }
 
   /**
@@ -209,7 +224,7 @@ public class RequestContext {
    * 
    * @param data data to be written in outputStream
    * @return this object
-   * @throws IOException
+   * @throws IOException if there is problem with writing to outputStream
    */
   public RequestContext write(byte[] data) throws IOException {
     if(!headerGenerated) {
@@ -219,11 +234,38 @@ public class RequestContext {
     return this;
   }
 
+  /**
+   * Writes text into outputStream. If header is not generated, generates header
+   * before writing any data.
+   * 
+   * @param text text to be written in outputStream
+   * @return this object
+   * @throws IOException if there is problem with writing to outputStream
+   */
   public RequestContext write(String text) throws IOException {
     if(!headerGenerated) {
       generateHeader();
     }
     outputStream.write(text.getBytes(charset));
+    return this;
+  }
+
+  /**
+   * Writes len bytes of data into outputStream starting from offset byte. If
+   * header is not generated, generates header before writing any data.
+   * 
+   * @param data data to be written in outputStream
+   * @param offset offset from which data will start to write
+   * @param len number of bytes written
+   * @return this object
+   * @throws IOException if there is problem with writing to outputStream
+   */
+  public RequestContext write(byte[] data, int offset, int len) throws IOException {
+    if(!headerGenerated) {
+      generateHeader();
+    }
+
+    outputStream.write(data, offset, len);
     return this;
   }
 
@@ -242,6 +284,10 @@ public class RequestContext {
       stringBuilder.append("; charset=").append(encoding);
     }
     stringBuilder.append("\r\n");
+    if(contentLength != null) {
+      stringBuilder.append("Content-Length: " + contentLength + "\r\n");
+    }
+
     for (RCCookie outputCookie : outputCookies) {
       stringBuilder.append("Set-Cookie: ").append(outputCookie.getName()).append("=\"").append(outputCookie.getValue())
           .append("\"");
@@ -257,7 +303,7 @@ public class RequestContext {
       stringBuilder.append("\r\n");
     }
     stringBuilder.append("\r\n");
-    
+
     outputStream.write(stringBuilder.toString().getBytes(StandardCharsets.ISO_8859_1));
     headerGenerated = true;
   }
