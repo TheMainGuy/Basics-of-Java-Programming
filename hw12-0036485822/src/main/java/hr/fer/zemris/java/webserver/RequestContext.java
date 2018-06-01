@@ -10,22 +10,111 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Implements request context for basic http requests. It can write to output
+ * stream which should be socket output stream. Before any writing, header is
+ * generated and written in output stream. For generating header, multiple
+ * parameters can be set. Also writes all cookies from outputCookies list. For
+ * writing data, encoding parameter can be set. Other functionalities such as
+ * parameters, temporaryPararmeters and persistentParameters are here to help
+ * with local management of data.
+ * 
+ * @author tin
+ *
+ */
 public class RequestContext {
+  /**
+   * Output stream to which data is written.
+   */
   private OutputStream outputStream;
+
+  /**
+   * Charset which will be used to write into output stream. Will be determined
+   * when generating header.
+   */
   private Charset charset;
+
+  /**
+   * Encoding which will be used to write into output stream.
+   */
   private String encoding = "UTF-8";
+
+  /**
+   * Status code which will be written in header.
+   */
   private int statusCode = 200;
+
+  /**
+   * Status text which will be written in header.
+   */
   private String statusText = "OK";
+
+  /**
+   * Mime type of file which will be written.
+   */
   private String mimeType = "text/html";
+
+  /**
+   * Content length of file which will be written.
+   */
   Long contentLength = null;
+
+  /**
+   * Parameters map which stores parameters.
+   */
   private Map<String, String> parameters;
+
+  /**
+   * Temporary parameters map which stores temporary parameters.
+   */
   private Map<String, String> temporaryParameters = new HashMap<>();
+
+  /**
+   * Persistent parameters map which stores persistent parameters.
+   */
   private Map<String, String> persistentParameters;
+
+  /**
+   * List of cookies which will be printed in header.
+   */
   private List<RCCookie> outputCookies;
+
+  /**
+   * Flag which indicates if header is generated.
+   */
   private boolean headerGenerated = false;
 
+  /**
+   * {@link IDispatcher} object.
+   */
+  IDispatcher dispatcher;
+
+  /**
+   * Constructor.
+   * 
+   * @param outputStream output stream in which this object will write
+   * @param parameters parameters map
+   * @param persistentParameters persistent parameters map
+   * @param outputCookies list of output cookies
+   */
   public RequestContext(OutputStream outputStream, Map<String, String> parameters,
       Map<String, String> persistentParameters, List<RCCookie> outputCookies) {
+    this(outputStream, parameters, persistentParameters, outputCookies, null, null);
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param outputStream output stream in which this object will write
+   * @param parameters parameters map
+   * @param persistentParameters persistent parameters map
+   * @param outputCookies list of output cookies
+   * @param temporaryParameters temporary parameters map
+   * @param dispatcher dispatcher
+   */
+  public RequestContext(OutputStream outputStream, Map<String, String> parameters,
+      Map<String, String> persistentParameters, List<RCCookie> outputCookies, Map<String, String> temporaryParameters,
+      IDispatcher dispatcher) {
     if(outputStream == null) {
       throw new NullPointerException("Output stream can not be null.");
     }
@@ -33,6 +122,8 @@ public class RequestContext {
     this.parameters = parameters != null ? parameters : new HashMap<>();
     this.persistentParameters = persistentParameters != null ? persistentParameters : new HashMap<>();
     this.outputCookies = outputCookies != null ? outputCookies : new ArrayList<>();
+    this.temporaryParameters = temporaryParameters != null ? temporaryParameters : null;
+    this.dispatcher = dispatcher != null ? dispatcher : null;
   }
 
   /**
@@ -134,7 +225,7 @@ public class RequestContext {
   }
 
   /**
-   * Retruns set of keys for parameters map
+   * Returns set of keys for parameters map
    * 
    * @return set of keys for parameters map
    */
@@ -153,7 +244,7 @@ public class RequestContext {
   }
 
   /**
-   * Retruns set of keys for persistentParameters map
+   * Returns set of keys for persistentParameters map
    * 
    * @return set of keys for persistentParameters map
    */
@@ -191,12 +282,21 @@ public class RequestContext {
   }
 
   /**
-   * Retruns set of keys for temporaryParameters map
+   * Returns set of keys for temporaryParameters map
    * 
    * @return set of keys for temporaryParameters map
    */
   public Set<String> getTemporaryParameterNames() {
     return temporaryParameters.keySet();
+  }
+
+  /**
+   * Returns dispatcher.
+   * 
+   * @return dispatcher
+   */
+  public IDispatcher getDispatcher() {
+    return dispatcher;
   }
 
   /**
@@ -231,6 +331,7 @@ public class RequestContext {
       generateHeader();
     }
     outputStream.write(data);
+    outputStream.flush();
     return this;
   }
 
@@ -247,6 +348,7 @@ public class RequestContext {
       generateHeader();
     }
     outputStream.write(text.getBytes(charset));
+    outputStream.flush();
     return this;
   }
 
@@ -266,6 +368,7 @@ public class RequestContext {
     }
 
     outputStream.write(data, offset, len);
+    outputStream.flush();
     return this;
   }
 
@@ -306,6 +409,7 @@ public class RequestContext {
 
     outputStream.write(stringBuilder.toString().getBytes(StandardCharsets.ISO_8859_1));
     headerGenerated = true;
+    outputStream.flush();
   }
 
   /**
@@ -371,9 +475,9 @@ public class RequestContext {
      * 
      * @param name cookie name
      * @param value cookie value
+     * @param maxAge cookie max age
      * @param domain cookie domain
      * @param path cookie path
-     * @param maxAge cookie max age
      */
     public RCCookie(String name, String value, Integer maxAge, String domain, String path) {
       this(name, value, domain, path, maxAge);

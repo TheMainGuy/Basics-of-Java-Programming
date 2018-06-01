@@ -198,5 +198,11 @@ public class SmartScriptEngine {
 
   public void execute() {
     documentNode.accept(visitor);
+    try {
+      requestContext.write("\n");
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 }

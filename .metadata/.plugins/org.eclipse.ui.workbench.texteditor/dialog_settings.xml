@@ -6,29 +6,30 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getProperty(" key="selection"/>
+		<item value="directCall" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="directCall"/>
+			<item value="unsupp"/>
+			<item value="unsup"/>
+			<item value="unsu"/>
+			<item value="rc"/>
+			<item value="parse"/>
+			<item value="split(&quot;=&quot;)"/>
+			<item value="tempPar"/>
+			<item value="temp"/>
+			<item value="tempPa"/>
+			<item value="charset ="/>
 			<item value="get("/>
 			<item value="properties"/>
 			<item value="main"/>
 			<item value="add"/>
-			<item value="outputCoo"/>
-			<item value="persistentParameter"/>
-			<item value="sortDescend"/>
-			<item value="JOption"/>
-			<item value="jOption"/>
-			<item value="sortAscending"/>
-			<item value="paste"/>
-			<item value="editor"/>
-			<item value="statis"/>
-			<item value="info"/>
-			<item value="char"/>
 		</list>
 		<list key="replacehistory">
+			<item value="context"/>
 			<item value="getProperty("/>
 			<item value="serverProperties"/>
 			<item value="temporaryParameter"/>
@@ -43,14 +44,13 @@
 			<item value="Button"/>
 			<item value=" LJMenuItem"/>
 			<item value="LJMenuItem"/>
-			<item value="MenuItem"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="338" key="DIALOG_WIDTH"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="434" key="DIALOG_HEIGHT"/>
-		<item value="1169" key="DIALOG_X_ORIGIN"/>
-		<item value="191" key="DIALOG_Y_ORIGIN"/>
+		<item value="1247" key="DIALOG_X_ORIGIN"/>
+		<item value="180" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

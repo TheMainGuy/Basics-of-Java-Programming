@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<title>Zbrajanje</title>
+	</head>
+	<body>
+		<h1>Zbrajanje</h1>
+		<table border='1'>
+			<tr><td>a</td><td>{$= "a" "1" @tparamGet $}</td></tr>
+			<tr><td>b</td><td>{$= "b" "2" @tparamGet $}</td></tr>
+			<tr><td>zbroj</td><td>{$= "zbroj" "0" @tparamGet $}</td></tr>
+		</table>
+	</body>
+</html>
