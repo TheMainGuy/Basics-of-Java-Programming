@@ -6,6 +6,13 @@ import java.util.Date;
 import hr.fer.zemris.java.webserver.IWebWorker;
 import hr.fer.zemris.java.webserver.RequestContext;
 
+/**
+ * Implements web worker which prints hello, current date and time and number of
+ * letters in argument name provided by client.
+ * 
+ * @author tin
+ *
+ */
 public class HelloWorker implements IWebWorker {
   @Override
   public void processRequest(RequestContext context) {

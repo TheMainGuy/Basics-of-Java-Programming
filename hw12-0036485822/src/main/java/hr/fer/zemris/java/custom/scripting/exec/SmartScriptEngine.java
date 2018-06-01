@@ -29,21 +29,103 @@ import hr.fer.zemris.java.webserver.RequestContext;
  *
  */
 public class SmartScriptEngine {
+  /**
+   * Document node in which the script is stored.
+   */
   private DocumentNode documentNode;
+
+  /**
+   * Context which is used to store, read and write data.
+   */
   private RequestContext requestContext;
+
+  /**
+   * Multistack used to save variables their scope.
+   */
   private ObjectMultistack multistack = new ObjectMultistack();
+
+  /**
+   * Visitor which visits all nodes and runs their code.
+   */
   private INodeVisitor visitor = new INodeVisitor() {
+
+    /**
+     * Constant that defines function which calculates sin from top of the stack.
+     */
     private final String SIN_FUNCTION = "sin";
+
+    /**
+     * Constant that defines function which uses first object on top of the stack as
+     * decimal number format to format second value on top of the stack as decimal
+     * number.
+     */
     private final String DECIMAL_NUMBER_FORMAT_FUNCTION = "decfmt";
+
+    /**
+     * Constant that defines function which duplicates value on top of the stack
+     * creating to objects on top of the stack.
+     */
     private final String DUPLICATE_FUNCTION = "dup";
+
+    /**
+     * Constant that defines function which swaps first 2 values on top of the
+     * stack.
+     */
     private final String SWAP_FUNCTION = "swap";
+
+    /**
+     * Constant that defines function which sets context's mime type.
+     */
     private final String SET_MIME_TYPE_FUNCTION = "setMimeType";
+
+    /**
+     * Constant that defines function which gets parameter from context's parameters
+     * map and puts it on top of the stack. It uses first value on top of the stack
+     * to define default value and second value as key for getting value from
+     * parameters map.
+     */
     private final String PARAM_GET_FUNCTION = "paramGet";
+
+    /**
+     * Constant that defines function which gets persistent parameter from context's
+     * persistentParameters map and puts it on top of the stack. It uses first value
+     * on top of the stack to define default value and second value as key for
+     * getting value from persistentParameters map.
+     */
     private final String PERSISTENT_PARAM_GET_FUNCTION = "pparamGet";
+
+    /**
+     * Constant that defines function which sets persistent parameter in context's
+     * persistentParameters map. It uses first value on top of the stack as key and
+     * second value as value for putting value in persistentParameters map.
+     */
     private final String PERSISTENT_PARAM_SET_FUNCTION = "pparamSet";
+
+    /**
+     * Constant that defines function which removes key value pair from context's
+     * persistentParameters map using value from top of the stack as key.
+     */
     private final String PERSISTENT_PARAM_DELETE_FUNCTION = "pparamDel";
+
+    /**
+     * Constant that defines function which gets temporary parameter from context's
+     * temporaryParameters map and puts it on top of the stack. It uses first value
+     * on top of the stack to define default value and second value as key for
+     * getting value from temporaryParameters map.
+     */
     private final String TEMPORARY_PARAM_GET_FUNCTION = "tparamGet";
+
+    /**
+     * Constant that defines function which sets temporary parameter in context's
+     * temporaryParameters map. It uses first value on top of the stack as key and
+     * second value as value for putting value in temporaryParameters map.
+     */
     private final String TEMPORARY_PARAM_SET_FUNCTION = "tparamSet";
+
+    /**
+     * Constant that defines function which removes key value pair from context's
+     * temporaryParameters map using value from top of the stack as key.
+     */
     private final String TEMPORARY_PARAM_DELETE_FUNCTION = "tparamDel";
 
     @Override
@@ -58,11 +140,11 @@ public class SmartScriptEngine {
     @Override
     public void visitForLoopNode(ForLoopNode node) {
       String variable = node.getVariable().asText();
-      double maxValue = Double.parseDouble(node.getEndExpression().asText());
-      double incrementValue = Double.parseDouble(node.getStepExpression().asText());
+      int maxValue = Integer.parseInt(node.getEndExpression().asText());
+      int incrementValue = Integer.parseInt(node.getStepExpression().asText());
       multistack.push(variable, new ValueWrapper(node.getStartExpression().asText()));
       while (true) {
-        double i = Double.parseDouble(multistack.peek(variable).getValue().toString());
+        int i = Integer.parseInt(multistack.peek(variable).getValue().toString());
         if(i > maxValue) {
           multistack.pop(variable);
           break;
@@ -191,11 +273,23 @@ public class SmartScriptEngine {
 
   };
 
+  /**
+   * Constructor.
+   * 
+   * @param documentNode node in which the script is stored
+   * @param requestContext context which will be used for storing, getting and
+   *          writing data
+   */
   public SmartScriptEngine(DocumentNode documentNode, RequestContext requestContext) {
     this.documentNode = documentNode;
     this.requestContext = requestContext;
   }
 
+  /**
+   * Executes smart script engine which effectively runs the script given in
+   * document node. Output from run script is written using given
+   * {@link RequestContext} object.
+   */
   public void execute() {
     documentNode.accept(visitor);
     try {

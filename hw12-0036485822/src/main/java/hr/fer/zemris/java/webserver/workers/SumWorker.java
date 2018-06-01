@@ -3,6 +3,13 @@ package hr.fer.zemris.java.webserver.workers;
 import hr.fer.zemris.java.webserver.IWebWorker;
 import hr.fer.zemris.java.webserver.RequestContext;
 
+/**
+ * Implements basic calculator worker which adds 2 values of arguments a and b
+ * and prints out sum.
+ * 
+ * @author tin
+ *
+ */
 public class SumWorker implements IWebWorker {
 
   @Override
@@ -10,11 +17,11 @@ public class SumWorker implements IWebWorker {
     int a;
     int b;
     try {
-     a = Integer.parseInt(context.getParameter("a"));
+      a = Integer.parseInt(context.getParameter("a"));
     } catch (Exception e) {
       a = 1;
     }
-    
+
     try {
       b = Integer.parseInt(context.getParameter("b"));
     } catch (Exception e) {

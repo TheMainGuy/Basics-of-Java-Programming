@@ -368,7 +368,8 @@ public class SmartHttpServer {
     /**
      * Session id.
      */
-    private String SID = null;
+    //Could not find purpose for it (maybe instead of sidCandidate?)
+    //private String SID = null;
 
     /**
      * Context used for writing to socket and store data.
@@ -450,6 +451,7 @@ public class SmartHttpServer {
 
       try {
         internalDispatchRequest(path, true);
+        csocket.close();
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
@@ -621,7 +623,6 @@ public class SmartHttpServer {
      */
     public void internalDispatchRequest(String urlPath, boolean directCall) throws Exception {
       Path requestedFile = documentRoot.resolve(urlPath.substring(1)).toAbsolutePath();
-      System.out.println("dobio sam request " + urlPath);
 
       if(directCall && urlPath.startsWith("/private")) {
         sendError(404, "File not found.");
@@ -637,8 +638,6 @@ public class SmartHttpServer {
       }
 
       if(urlPath.startsWith("/ext/")) {
-
-        // workersMap.get(worker).processRequest(context);
         String fqcn = "hr.fer.zemris.java.webserver.workers." + urlPath.substring(5);
         Class<?> referenceToClass;
         try {
