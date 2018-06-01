@@ -48,7 +48,6 @@
 <fullyQualifiedTypeName name="java.net.InetSocketAddress"/>
 <fullyQualifiedTypeName name="hr.fer.zemris.java.webserver.IDispatcher"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="hr.fer.zemris.java.webserver.RequestContext"/>
 <fullyQualifiedTypeName name="hr.fer.zemris.java.webserver.SmartHttpServer.ClientWorker"/>
 <fullyQualifiedTypeName name="hr.fer.zemris.java.custom.scripting.exec.SmartScriptEngine"/>
 <fullyQualifiedTypeName name="hr.fer.zemris.java.custom.scripting.parser.SmartScriptParser"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="hr.fer.zemris.java.webserver.IWebWorker"/>
 <fullyQualifiedTypeName name="java.util.regex.Matcher"/>
+<fullyQualifiedTypeName name="hr.fer.zemris.java.webserver.RequestContext"/>
 </qualifiedTypeNameHistroy>

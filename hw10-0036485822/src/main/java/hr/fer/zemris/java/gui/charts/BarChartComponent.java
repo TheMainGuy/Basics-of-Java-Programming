@@ -168,6 +168,27 @@ public class BarChartComponent extends JComponent {
               / (barChart.getMaxY() - barChart.getMinY()));
       graphics2D.setColor(Color.BLACK);
     }
+
+    /**
+     * Draw axis arrows.
+     */
+    int[] xPoints = new int[3];
+    int[] yPoints = new int[3];
+    xPoints[0] = (int) Math.floor(width * 0.98) + 3;
+    yPoints[0] = chartOrigin.getY();
+    xPoints[1] = xPoints[0] - 5;
+    yPoints[1] = yPoints[0] + 3;
+    xPoints[2] = xPoints[1];
+    yPoints[2] = yPoints[0] - 3;
+    graphics2D.fillPolygon(xPoints, yPoints, 3);
+
+    xPoints[0] = chartOrigin.getX();
+    yPoints[0] = (int) Math.floor(height * 0.02) - 3;
+    xPoints[1] = xPoints[0] - 3;
+    yPoints[1] = yPoints[0] + 5;
+    xPoints[2] = xPoints[0] + 3;
+    yPoints[2] = yPoints[1];
+    graphics2D.fillPolygon(xPoints, yPoints, 3);
   }
 
 }
