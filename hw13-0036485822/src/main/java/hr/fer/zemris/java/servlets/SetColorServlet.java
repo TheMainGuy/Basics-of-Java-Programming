@@ -8,6 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Implements servlet, which when its doGet method is called, sets web
+ * application color to parameter color for current session.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/setcolor")
 public class SetColorServlet extends HttpServlet {
 

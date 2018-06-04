@@ -10,6 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Implements servlet, which when its doGet method is called, dynamically
+ * renders table of basic trigonometric info. Numbers from parameter a to
+ * parameter b are in the first column, their sin value in second column and cos
+ * value in third column.
+ * 
+ * Sin and cos are calculated using degree angles.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/trigonometric")
 public class TrigonometricServlet extends HttpServlet {
 

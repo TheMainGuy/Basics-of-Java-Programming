@@ -12,11 +12,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Implements servlet, which when its doGet method is called, creates or updates
+ * glasanje-rezultati.txt file and redirects request to /glasanje-rezultati.
+ * 
+ * File glasanje-rezultati.txt will be created if it does not exist or if it
+ * does not contain any bands.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/glasanje-glasaj")
 public class GlasanjeGlasajServlet extends HttpServlet {
 
   /**
-   * 
+   * Serial version UID.
    */
   private static final long serialVersionUID = 1L;
 

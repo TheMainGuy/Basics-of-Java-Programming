@@ -19,11 +19,19 @@ import javax.servlet.http.HttpServletResponse;
 import hr.fer.zemris.java.gui.charts.PieChart;
 import hr.fer.zemris.java.servlets.GlasanjeRezultatiServlet.VoteData;
 
+/**
+ * Implements servlet, which when its doGet method is called, generates band
+ * vote report by creating pie chart and sending it as response. Pie chart
+ * generated will contain all bands from file glasanje-rezultati.txt.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/glasanje-grafika")
 public class BandVoteReportServlet extends HttpServlet {
 
   /**
-   * 
+   * Serial version UID.
    */
   private static final long serialVersionUID = 1L;
 
@@ -38,7 +46,7 @@ public class BandVoteReportServlet extends HttpServlet {
       sortedVotes.add(new VoteData(Integer.parseInt(id), ServletUtil.getBand(req, id),
           Integer.parseInt(voteResult.split("\t")[1])));
     }
-    
+
     PieChart pieChart = new PieChart("Band votes", "Band popularity", sortedVotes);
     BufferedImage bim = pieChart.getBufferedImage();
     ByteArrayOutputStream bos = new ByteArrayOutputStream();

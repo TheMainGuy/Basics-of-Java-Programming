@@ -20,16 +20,23 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import hr.fer.zemris.java.servlets.GlasanjeRezultatiServlet.VoteData;
 
+/**
+ * Implements servlet which when its doGet method is called, generates
+ * band_votes.xls file containing all bands and their corresponding number of
+ * votes in each row.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/glasanje-xls")
 public class BandVotesInExcelServlet extends HttpServlet {
   /**
-   * 
+   * Serial version UID.
    */
   private static final long serialVersionUID = 1L;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    System.out.println("a ovo");
     String fileName = req.getServletContext().getRealPath("/WEB-INF/glasanje-rezultati.txt");
     String file = new String(Files.readAllBytes(Paths.get(fileName)), StandardCharsets.UTF_8);
     String[] voteResults = file.split("\n");

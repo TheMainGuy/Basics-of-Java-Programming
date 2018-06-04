@@ -13,6 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Implements servlet, which when its doGet method is called, renders list of
+ * bands defined in file glasanje-definicija.txt.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/glasanje")
 public class GlasanjeServlet extends HttpServlet {
 

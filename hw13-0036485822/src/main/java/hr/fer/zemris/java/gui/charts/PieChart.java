@@ -6,7 +6,6 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.util.Rotation;
@@ -15,16 +14,30 @@ import org.jfree.data.general.PieDataset;
 
 import hr.fer.zemris.java.servlets.GlasanjeRezultatiServlet.VoteData;
 
+/**
+ * Implements pie chart using {@link JFreeChart}. Generates pie chart with
+ * different color for each compared item.
+ * 
+ * @author tin
+ *
+ */
 public class PieChart extends JFrame {
 
+  /**
+   * Serial version UID.
+   */
   private static final long serialVersionUID = 1L;
+
+  /**
+   * Reference to chart.
+   */
   JFreeChart chart;
 
   /**
    * Default constructor for demonstration.
    * 
    * @param applicationTitle application title
-   * @param chartTitle chart title which will be displayed
+   * @param chartTitle chart title which will be displayed above chart
    */
   public PieChart(String applicationTitle, String chartTitle) {
     super(applicationTitle);
@@ -32,33 +45,40 @@ public class PieChart extends JFrame {
     PieDataset dataset = createDataset();
     // based on the dataset we create the chart
     chart = createChart(dataset, chartTitle);
-    // we put the chart into a panel
-    ChartPanel chartPanel = new ChartPanel(chart);
-    // default size
-    chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-    // add it to our application
-    setContentPane(chartPanel);
   }
-  
+
+  /**
+   * Constructor.
+   * 
+   * @param applicationTitle application title
+   * @param chartTitle chart title which will be displayed above chart
+   * @param voteData list of data which will be used to generate chart
+   */
   public PieChart(String applicationTitle, String chartTitle, List<VoteData> voteData) {
     super(applicationTitle);
     PieDataset dataset = createDataset(voteData);
     chart = createChart(dataset, chartTitle);
-    ChartPanel chartPanel = new ChartPanel(chart);
-    chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-    setContentPane(chartPanel);
+
   }
 
+  /**
+   * Creates dataset for generating pie chart from given list of data.
+   * 
+   * @param voteData list of data which will be used to generate chart
+   * @return {@link PieDataset} object for generating chart
+   */
   private PieDataset createDataset(List<VoteData> voteData) {
     DefaultPieDataset result = new DefaultPieDataset();
-    for(VoteData bandVoteData : voteData) {
+    for (VoteData bandVoteData : voteData) {
       result.setValue(bandVoteData.getBandName(), bandVoteData.getVoteCount());
     }
     return result;
   }
 
   /**
-   * Creates a sample dataset
+   * Creates a sample dataset for demonstration.
+   * 
+   * @return demonstration dataset
    */
   private PieDataset createDataset() {
     DefaultPieDataset result = new DefaultPieDataset();
@@ -70,7 +90,11 @@ public class PieChart extends JFrame {
   }
 
   /**
-   * Creates a chart
+   * Creates pie chart using given dataset and title.
+   * 
+   * @param dataset dataset which will be used to draw chart
+   * @param title title which will be rendered above chart
+   * @return created pie chart
    */
   private JFreeChart createChart(PieDataset dataset, String title) {
 

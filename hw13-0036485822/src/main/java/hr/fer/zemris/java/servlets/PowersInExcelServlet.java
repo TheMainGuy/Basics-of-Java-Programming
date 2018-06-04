@@ -12,11 +12,25 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+/**
+ * Implements servlet, which when its doGet method is called, generates
+ * powers.xls file containing all numbers from parameter a to parameter b and
+ * their powers on each one of n sheets, where n is another parameter.
+ * 
+ * Parameters a and be must be in range [-100, 100] while parameter n must be in
+ * range [1,5].
+ * 
+ * On each of n sheets, i-th power of each number is calculated and stored in
+ * the cell next to the number of which it is power of, where i is sheet index.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/powers")
 public class PowersInExcelServlet extends HttpServlet {
 
   /**
-   * 
+   * Serial version UID.
    */
   private static final long serialVersionUID = 1L;
 
