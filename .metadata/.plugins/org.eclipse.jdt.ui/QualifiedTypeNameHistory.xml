@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.swing.Action"/>
-<fullyQualifiedTypeName name="javax.swing.text.Document"/>
-<fullyQualifiedTypeName name="hr.fer.zemris.java.hw11.jnotepadpp.local.ljelements.LJMenuItem"/>
-<fullyQualifiedTypeName name="javax.swing.event.CaretListener"/>
-<fullyQualifiedTypeName name="hr.fer.zemris.java.hw11.jnotepadpp.listeners.MultipleDocumentListener"/>
 <fullyQualifiedTypeName name="java.util.Comparator"/>
 <fullyQualifiedTypeName name="java.util.Locale"/>
 <fullyQualifiedTypeName name="java.text.Collator"/>
@@ -32,10 +27,7 @@
 <fullyQualifiedTypeName name="java.text.DecimalFormat"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="hr.fer.zemris.java.custom.scripting.elems.ElementOperator"/>
-<fullyQualifiedTypeName name="java.io.OutputStream"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.io.PushbackInputStream"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
@@ -60,4 +52,12 @@
 <fullyQualifiedTypeName name="hr.fer.zemris.java.webserver.IWebWorker"/>
 <fullyQualifiedTypeName name="java.util.regex.Matcher"/>
 <fullyQualifiedTypeName name="hr.fer.zemris.java.webserver.RequestContext"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="hr.fer.zemris.java.servlets.TrigonometricServlet.TrigonometricInfo"/>
+<fullyQualifiedTypeName name="java.io.OutputStream"/>
+<fullyQualifiedTypeName name="hr.fer.zemris.java.gui.charts.PieChart"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
+<fullyQualifiedTypeName name="javax.servlet.annotation.WebServlet"/>
 </qualifiedTypeNameHistroy>
