@@ -23,6 +23,18 @@ import hr.fer.zemris.java.model.BasicPolls;
 import hr.fer.zemris.java.model.PollData;
 import hr.fer.zemris.java.model.PollData.PollOption;
 
+/**
+ * Implements servlet context listener which, when context is initialized,
+ * creates {@link ComboPooledDataSource} objectt which will be used to provide
+ * connections to database. After that, checks database for Polls and
+ * PollOptions tables and creates them if needed. After that, checks if Polls
+ * table is empty and if it is, initializes 2 basic polls.
+ * 
+ * When context is destroyed, destroys {@link ComboPooledDataSource} object.
+ * 
+ * @author tin
+ *
+ */
 @WebListener
 public class Inicijalizacija implements ServletContextListener {
   private final String POLLS_TABLE = "POLLS";
@@ -125,7 +137,8 @@ public class Inicijalizacija implements ServletContextListener {
    * in table PollOptions. Creates statement based on parameters poll and id.
    * 
    * @param poll poll which will be used to get options
-   * @param id id which will be used to reference poll option to specific poll in Polls table
+   * @param id id which will be used to reference poll option to specific poll in
+   *          Polls table
    * @return sql statement which inserts poll options in PollOptions table
    */
   private String createPollOptionsInsert(PollData poll, long id) {
@@ -193,7 +206,7 @@ public class Inicijalizacija implements ServletContextListener {
       preparedStatement.execute();
     }
   }
-  
+
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
     ComboPooledDataSource cpds = (ComboPooledDataSource) sce.getServletContext().getAttribute("hr.fer.zemris.dbpool");

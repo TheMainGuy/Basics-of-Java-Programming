@@ -65,7 +65,7 @@ public class SQLDAO implements DAO {
     Connection con = SQLConnectionProvider.getConnection();
     PreparedStatement pst = null;
     try {
-      pst = con.prepareStatement("select id, title, message from Poruke where id=?");
+      pst = con.prepareStatement("select id, title, message from POLLS where id=?");
       pst.setLong(1, Long.valueOf(id));
       try {
         ResultSet rs = pst.executeQuery();
@@ -76,16 +76,16 @@ public class SQLDAO implements DAO {
             String message = rs.getString(3);
             List<PollOption> options = new ArrayList<>();
             pst = con
-                .prepareStatement("select optionTitle, optionLink, pollId, votesCount from POLLOPTIONS where pollId=?");
+                .prepareStatement("select optionTitle, optionLink, id, votesCount from POLLOPTIONS where pollId=?");
             pst.setLong(1, Long.valueOf(pollId));
             ResultSet pollOptions = pst.executeQuery();
             try {
               while (pollOptions != null && pollOptions.next()) {
                 String optionTitle = pollOptions.getString(1);
                 String optionLink = pollOptions.getString(2);
-                long belongsTo = pollOptions.getLong(3);
+                long optionId = pollOptions.getLong(3);
                 int votesCount = pollOptions.getInt(4);
-                options.add(new PollOption(optionTitle, optionLink, belongsTo, votesCount));
+                options.add(new PollOption(optionTitle, optionLink, optionId, votesCount));
               }
             } finally {
               try {
@@ -112,6 +112,19 @@ public class SQLDAO implements DAO {
       throw new DAOException("Pogreška prilikom dohvata korisnika.", ex);
     }
     return poll;
+  }
+
+  @Override
+  public void updateVotesCount(int votesCount, long optionId) throws DAOException {
+    Connection con = SQLConnectionProvider.getConnection();
+    try {
+      PreparedStatement updateVotes = con.prepareStatement("UPDATE POLLOPTIONS\nSET votesCount = ? WHERE id = ?");
+      updateVotes.setInt(1, votesCount);
+      updateVotes.setLong(2, optionId);
+      updateVotes.execute();
+    } catch (Exception e) {
+      throw new DAOException("Problem with updating votesCount.");
+    }
   }
 
 }

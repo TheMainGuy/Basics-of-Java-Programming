@@ -104,9 +104,9 @@ public class PollData {
     private String optionLink;
 
     /**
-     * Poll id which indicates to which poll this option belongs to.
+     * Option id.
      */
-    private long pollID;
+    private long optionId;
 
     /**
      * Number of votes this option got.
@@ -121,11 +121,10 @@ public class PollData {
      * @param pollID id of a poll to which this option belongs to
      * @param votesCount number of votes this option got
      */
-    public PollOption(String optionTitle, String optionLink, long pollID, int votesCount) {
-      super();
+    public PollOption(String optionTitle, String optionLink, long optionId, int votesCount) {
       this.optionTitle = optionTitle;
       this.optionLink = optionLink;
-      this.pollID = pollID;
+      this.optionId = optionId;
       this.votesCount = votesCount;
     }
 
@@ -155,10 +154,10 @@ public class PollData {
     }
 
     /**
-     * @return the pollID
+     * @return the optionId
      */
-    public long getPollID() {
-      return pollID;
+    public long getOptionId() {
+      return optionId;
     }
 
     /**
