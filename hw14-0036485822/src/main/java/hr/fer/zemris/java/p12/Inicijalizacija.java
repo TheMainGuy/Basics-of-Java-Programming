@@ -9,6 +9,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
@@ -18,23 +19,21 @@ import javax.servlet.annotation.WebListener;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
 
+import hr.fer.zemris.java.database.BasicPolls;
+import hr.fer.zemris.java.database.PollData;
+import hr.fer.zemris.java.database.PollData.PollOption;
+
 @WebListener
 public class Inicijalizacija implements ServletContextListener {
-  private final String pollsTable = "POLLS";
-  private final String pollsTableCreate = "CREATE TABLE Polls\n" + 
-      " (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n" + 
-      " title VARCHAR(150) NOT NULL,\n" + 
-      " message CLOB(2048) NOT NULL\n" + 
-      ")";
-  private final String pollOptionsTable = "POLLOPTIONS";
-  private final String pollOptinosTableCreate = "CREATE TABLE PollOptions\n" + 
-      " (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n" + 
-      " optionTitle VARCHAR(100) NOT NULL,\n" + 
-      " optionLink VARCHAR(150) NOT NULL,\n" + 
-      " pollID BIGINT,\n" + 
-      " votesCount BIGINT,\n" + 
-      " FOREIGN KEY (pollID) REFERENCES Polls(id)\n" + 
-      ")";
+  private final String POLLS_TABLE = "POLLS";
+  private final String POLLS_TABLE_CREATE = "CREATE TABLE Polls\n"
+      + " (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n" + " title VARCHAR(150) NOT NULL,\n"
+      + " message CLOB(2048) NOT NULL\n" + ")";
+  private final String POLL_OPTIONS_TABLE = "POLLOPTIONS";
+  private final String POLL_OPTIONS_TABLE_CREATE = "CREATE TABLE PollOptions\n"
+      + " (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n" + " optionTitle VARCHAR(100) NOT NULL,\n"
+      + " optionLink VARCHAR(150) NOT NULL,\n" + " pollID BIGINT,\n" + " votesCount BIGINT,\n"
+      + " FOREIGN KEY (pollID) REFERENCES Polls(id)\n" + ")";
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
@@ -74,31 +73,92 @@ public class Inicijalizacija implements ServletContextListener {
     sce.getServletContext().setAttribute("hr.fer.zemris.dbpool", cpds);
   }
 
+  /**
+   * Checks if Polls table is empty and if it is creates two basic polls. Method
+   * creates two basic polls with data stored in constants BASIC_POLLS and
+   * BASIC_POLL_OPTIONS. It will populate tables Polls and PollOptions with two
+   * basic polls.
+   * 
+   * @param cpds combo pooled data source used to provide connection
+   * @throws SQLException
+   */
   private void basicPolls(ComboPooledDataSource cpds) throws SQLException {
     Connection connection = cpds.getConnection();
     PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM POLLS");
     ResultSet resultSet = preparedStatement.executeQuery();
     if(!resultSet.next()) {
-      String sql = "";
-      createBasicPolls(connection, sql);
+      createBasicPolls(connection, BasicPolls.getBasicPoll());
     }
   }
 
-  private void createBasicPolls(Connection connection, String sql) throws SQLException {
-    PreparedStatement preparedStatement = connection.prepareStatement(sql);
-    preparedStatement.execute();
+  /**
+   * Method which uses given connection to instantiate poll. Also takes care of
+   * linking poll inserted to Polls table with its options in PollOptions.
+   * 
+   * @param connection connection used to communicate with database
+   * @param createPoll sql used to insert poll in Poll table
+   * @param createPollOptions sql used to insert poll options in PollOptions table
+   * @throws SQLException
+   */
+  private void createBasicPolls(Connection connection, PollData poll) throws SQLException {
+    PreparedStatement preparedStatement = connection.prepareStatement(createPollInsert(poll),
+        java.sql.Statement.RETURN_GENERATED_KEYS);
+    int affectedRows = preparedStatement.executeUpdate();
+    if(affectedRows == 0) {
+      throw new SQLException("Failed inserting row in Polls table.");
+    }
+
+    ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+    generatedKeys.next();
+    long id = generatedKeys.getLong(1);
+    PreparedStatement pollOptionsStatement = connection.prepareStatement(createPollOptionsInsert(poll, id));
+    affectedRows = pollOptionsStatement.executeUpdate();
+
+    if(affectedRows != poll.getOptions().size()) {
+      throw new SQLException("Couldn't insert poll options.");
+    }
+
   }
 
-  @Override
-  public void contextDestroyed(ServletContextEvent sce) {
-    ComboPooledDataSource cpds = (ComboPooledDataSource) sce.getServletContext().getAttribute("hr.fer.zemris.dbpool");
-    if(cpds != null) {
-      try {
-        DataSources.destroy(cpds);
-      } catch (SQLException e) {
-        e.printStackTrace();
+  /**
+   * Helper method which creates insert sql statement for inserting poll options
+   * in table PollOptions. Creates statement based on parameters poll and id.
+   * 
+   * @param poll poll which will be used to get options
+   * @param id id which will be used to reference poll option to specific poll in Polls table
+   * @return sql statement which inserts poll options in PollOptions table
+   */
+  private String createPollOptionsInsert(PollData poll, long id) {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("INSERT INTO POLLOPTIONS (optiontitle, optionlink, pollid, votescount) VALUES\n");
+    List<PollOption> options = poll.getOptions();
+    for (int i = 0, n = poll.getOptions().size(); i < n; i++) {
+      PollOption option = options.get(i);
+      stringBuilder.append("('");
+      stringBuilder.append(option.getOptionTitle()).append("', '");
+      stringBuilder.append(option.getOptionLink()).append("', ");
+      stringBuilder.append(id).append(", ");
+      stringBuilder.append(option.getVotesCount()).append(")");
+      if(i != n - 1) {
+        stringBuilder.append(",\n");
       }
     }
+
+    return stringBuilder.toString();
+  }
+
+  /**
+   * Helper method which creates insert sql statement for inserting poll in table
+   * Polls. Creates statement based on information given in parameter poll.
+   * 
+   * @param poll
+   * @return sql statement which inserts given poll in Polls table
+   */
+  private String createPollInsert(PollData poll) {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("INSERT INTO POLLS (title, message) VALUES\n ('");
+    stringBuilder.append(poll.getTitle()).append("', '").append(poll.getMessage()).append("')");
+    return stringBuilder.toString();
   }
 
   /**
@@ -111,8 +171,8 @@ public class Inicijalizacija implements ServletContextListener {
    */
   private void createTablesIfNotExist(ComboPooledDataSource cpds) throws SQLException {
     Connection connection = cpds.getConnection();
-    checkAndCreateTable(connection, pollsTable, pollsTableCreate);
-    checkAndCreateTable(connection, pollOptionsTable, pollOptinosTableCreate);
+    checkAndCreateTable(connection, POLLS_TABLE, POLLS_TABLE_CREATE);
+    checkAndCreateTable(connection, POLL_OPTIONS_TABLE, POLL_OPTIONS_TABLE_CREATE);
   }
 
   /**
@@ -131,6 +191,18 @@ public class Inicijalizacija implements ServletContextListener {
     if(!rs.next()) {
       PreparedStatement preparedStatement = connection.prepareStatement(tableCreate);
       preparedStatement.execute();
+    }
+  }
+  
+  @Override
+  public void contextDestroyed(ServletContextEvent sce) {
+    ComboPooledDataSource cpds = (ComboPooledDataSource) sce.getServletContext().getAttribute("hr.fer.zemris.dbpool");
+    if(cpds != null) {
+      try {
+        DataSources.destroy(cpds);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
   }
 
