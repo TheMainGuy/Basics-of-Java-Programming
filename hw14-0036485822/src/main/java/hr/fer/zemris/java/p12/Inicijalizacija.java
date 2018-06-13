@@ -19,9 +19,9 @@ import javax.servlet.annotation.WebListener;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
 
-import hr.fer.zemris.java.database.BasicPolls;
-import hr.fer.zemris.java.database.PollData;
-import hr.fer.zemris.java.database.PollData.PollOption;
+import hr.fer.zemris.java.model.BasicPolls;
+import hr.fer.zemris.java.model.PollData;
+import hr.fer.zemris.java.model.PollData.PollOption;
 
 @WebListener
 public class Inicijalizacija implements ServletContextListener {

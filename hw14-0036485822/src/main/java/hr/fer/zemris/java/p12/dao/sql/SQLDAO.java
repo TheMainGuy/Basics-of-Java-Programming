@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import hr.fer.zemris.java.database.PollData;
-import hr.fer.zemris.java.database.PollData.PollOption;
+import hr.fer.zemris.java.model.PollData;
+import hr.fer.zemris.java.model.PollData.PollOption;
 import hr.fer.zemris.java.p12.dao.DAO;
 import hr.fer.zemris.java.p12.dao.DAOException;
 

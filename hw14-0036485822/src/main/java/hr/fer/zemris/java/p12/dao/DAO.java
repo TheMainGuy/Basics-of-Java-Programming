@@ -2,7 +2,7 @@ package hr.fer.zemris.java.p12.dao;
 
 import java.util.List;
 
-import hr.fer.zemris.java.database.PollData;
+import hr.fer.zemris.java.model.PollData;
 
 /**
  * Sučelje prema podsustavu za perzistenciju podataka.

@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.database;
+package hr.fer.zemris.java.model;
 
 import java.util.List;
 

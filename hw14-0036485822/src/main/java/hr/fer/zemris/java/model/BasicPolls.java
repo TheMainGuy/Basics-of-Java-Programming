@@ -1,9 +1,9 @@
-package hr.fer.zemris.java.database;
+package hr.fer.zemris.java.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hr.fer.zemris.java.database.PollData.PollOption;
+import hr.fer.zemris.java.model.PollData.PollOption;
 
 /**
  * Class which defines 2 basic polls, one for voting for your favorite band and

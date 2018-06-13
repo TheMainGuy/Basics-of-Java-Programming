@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hr.fer.zemris.java.database.PollData;
+import hr.fer.zemris.java.model.PollData;
 import hr.fer.zemris.java.p12.dao.DAOProvider;
 
 @WebServlet("/servleti/index.html")
