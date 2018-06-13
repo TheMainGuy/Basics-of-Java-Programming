@@ -16,14 +16,10 @@ import hr.fer.zemris.java.model.PollData.PollOption;
 import hr.fer.zemris.java.p12.dao.DAOProvider;
 
 /**
- * Implements servlet, which when its doGet method is called, creates or updates
- * glasanje-rezultati.txt file if needed, sorts bands and defines which bands
- * are the winning ones.
+ * Implements servlet, which when its doGet method is called, prepares poll data
+ * for rendering.
  * 
  * Then renders voting results using glasanjeRez.jsp file.
- * 
- * File glasanje-rezultati.txt will be created if it does not exist or if it
- * does not contain any bands.
  * 
  * @author tin
  *
@@ -39,7 +35,7 @@ public class GlasanjeRezultatiServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     if(req.getParameter("pollID") == null) {
-      //TODO error
+      // TODO error
       return;
     }
     PollData poll = DAOProvider.getDao().getPoll(Long.parseLong(req.getParameter("pollID")));

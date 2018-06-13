@@ -14,6 +14,9 @@ import hr.fer.zemris.java.model.PollData.PollOption;
  */
 public class BasicPolls {
 
+  /**
+   * Basic poll for picking your favorite band.
+   */
   private static PollData basicPoll;
 
   static {
@@ -28,6 +31,11 @@ public class BasicPolls {
     basicPoll = new PollData("Band voting", "Vote for your favorite band", basicOptions);
   }
 
+  /**
+   * Returns band poll.
+   * 
+   * @return band poll
+   */
   public static PollData getBasicPoll() {
     return basicPoll;
   }

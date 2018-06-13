@@ -37,11 +37,27 @@ import hr.fer.zemris.java.model.PollData.PollOption;
  */
 @WebListener
 public class Inicijalizacija implements ServletContextListener {
+
+  /**
+   * Name of polls table.
+   */
   private final String POLLS_TABLE = "POLLS";
+
+  /**
+   * SQL statement used to create polls table.
+   */
   private final String POLLS_TABLE_CREATE = "CREATE TABLE Polls\n"
       + " (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n" + " title VARCHAR(150) NOT NULL,\n"
       + " message CLOB(2048) NOT NULL\n" + ")";
+
+  /**
+   * Name of poll options table.
+   */
   private final String POLL_OPTIONS_TABLE = "POLLOPTIONS";
+
+  /**
+   * SQL statement used to create poll options table.
+   */
   private final String POLL_OPTIONS_TABLE_CREATE = "CREATE TABLE PollOptions\n"
       + " (id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n" + " optionTitle VARCHAR(100) NOT NULL,\n"
       + " optionLink VARCHAR(150) NOT NULL,\n" + " pollID BIGINT,\n" + " votesCount BIGINT,\n"

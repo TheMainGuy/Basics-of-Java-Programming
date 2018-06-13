@@ -1,5 +1,6 @@
 package hr.fer.zemris.java.p12;
 
+import hr.fer.zemris.java.p12.dao.DAOProvider;
 import hr.fer.zemris.java.p12.dao.sql.SQLConnectionProvider;
 
 import java.io.IOException;
@@ -15,35 +16,46 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.sql.DataSource;
 
-@WebFilter(filterName="f1",urlPatterns={"/servleti/*"})
+/**
+ * Method implements filter which filters requests made to servleti by setting
+ * connectino to {@link SQLConnectionProvider} object. This allows servlets to
+ * get that connection through {@link DAOProvider} object.
+ * 
+ * @author tin
+ *
+ */
+@WebFilter(filterName = "f1", urlPatterns = { "/servleti/*" })
 public class ConnectionSetterFilter implements Filter {
-	
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-	}
-	
-	@Override
-	public void destroy() {
-	}
-	
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		
-		DataSource ds = (DataSource)request.getServletContext().getAttribute("hr.fer.zemris.dbpool");
-		Connection con = null;
-		try {
-			con = ds.getConnection();
-		} catch (SQLException e) {
-			throw new IOException("Baza podataka nije dostupna.", e);
-		}
-		SQLConnectionProvider.setConnection(con);
-		try {
-			chain.doFilter(request, response);
-		} finally {
-			SQLConnectionProvider.setConnection(null);
-			try { con.close(); } catch(SQLException ignorable) {}
-		}
-	}
-	
+
+  @Override
+  public void init(FilterConfig filterConfig) throws ServletException {
+  }
+
+  @Override
+  public void destroy() {
+  }
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+
+    DataSource ds = (DataSource) request.getServletContext().getAttribute("hr.fer.zemris.dbpool");
+    Connection con = null;
+    try {
+      con = ds.getConnection();
+    } catch (SQLException e) {
+      throw new IOException("Baza podataka nije dostupna.", e);
+    }
+    SQLConnectionProvider.setConnection(con);
+    try {
+      chain.doFilter(request, response);
+    } finally {
+      SQLConnectionProvider.setConnection(null);
+      try {
+        con.close();
+      } catch (SQLException ignorable) {
+      }
+    }
+  }
+
 }

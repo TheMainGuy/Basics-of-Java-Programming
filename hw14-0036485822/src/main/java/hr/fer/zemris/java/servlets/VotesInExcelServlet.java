@@ -18,9 +18,9 @@ import hr.fer.zemris.java.model.PollData.PollOption;
 import hr.fer.zemris.java.p12.dao.DAOProvider;
 
 /**
- * Implements servlet which when its doGet method is called, generates
- * band_votes.xls file containing all bands and their corresponding number of
- * votes in each row.
+ * Implements servlet which when its doGet method is called, generates votes.xls
+ * file containing all vote options and their corresponding number of votes in
+ * each row.
  * 
  * @author tin
  *
@@ -35,7 +35,7 @@ public class VotesInExcelServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     if(req.getParameter("pollID") == null) {
-      //TODO error
+      // TODO error
       return;
     }
     PollData poll = DAOProvider.getDao().getPoll(Long.parseLong(req.getParameter("pollID")));

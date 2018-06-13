@@ -5,27 +5,30 @@ import java.util.List;
 import hr.fer.zemris.java.model.PollData;
 
 /**
- * Sučelje prema podsustavu za perzistenciju podataka.
+ * Interface towards database system.
  * 
- * @author marcupic
+ * @author tin
  *
  */
 public interface DAO {
 
   /**
-   * Dohvaća sve postojeće unose u bazi, ali puni samo dva podatka: id i title.
+   * Gets basic data from Polls table.
    * 
-   * @return listu unosa
-   * @throws DAOException u slučaju pogreške
+   * @return list of polls in Polls table
+   * @throws DAOException if any error occurs
    */
   public List<PollData> getBasicPollList() throws DAOException;
 
   /**
-   * Dohvaća Unos za zadani id. Ako unos ne postoji, vraća <code>null</code>.
+   * Gets poll from Polls table and its options from PollOptions table using given
+   * id. If there is no poll with given id, returns <code>null</code>.
    * 
-   * @param id
-   * @return
-   * @throws DAOException
+   * Poll and its options is returned in form of {@link PollData} object.
+   * 
+   * @param id id which will be used to get poll
+   * @return poll with given id and its options
+   * @throws DAOException if any error occurs
    */
   public PollData getPoll(long id) throws DAOException;
 

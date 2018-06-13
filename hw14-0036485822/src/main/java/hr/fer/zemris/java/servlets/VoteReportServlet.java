@@ -16,9 +16,9 @@ import hr.fer.zemris.java.model.PollData;
 import hr.fer.zemris.java.p12.dao.DAOProvider;
 
 /**
- * Implements servlet, which when its doGet method is called, generates band
- * vote report by creating pie chart and sending it as response. Pie chart
- * generated will contain all bands from file glasanje-rezultati.txt.
+ * Implements servlet, which when its doGet method is called, generates vote
+ * report by creating pie chart and sending it as response. Pie chart generated
+ * will contain all vote options from PollOptions table for given poll.
  * 
  * @author tin
  *
@@ -34,12 +34,12 @@ public class VoteReportServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     if(req.getParameter("pollID") == null) {
-      //TODO error
+      // TODO error
       return;
     }
 
     PollData poll = DAOProvider.getDao().getPoll(Long.parseLong(req.getParameter("pollID")));
-    
+
     PieChart pieChart = new PieChart("Votes", "Popularity", poll.getOptions());
     BufferedImage bim = pieChart.getBufferedImage();
     ByteArrayOutputStream bos = new ByteArrayOutputStream();

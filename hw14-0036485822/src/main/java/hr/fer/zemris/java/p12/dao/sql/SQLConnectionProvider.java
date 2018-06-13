@@ -3,36 +3,43 @@ package hr.fer.zemris.java.p12.dao.sql;
 import java.sql.Connection;
 
 /**
- * Pohrana veza prema bazi podataka u ThreadLocal object. ThreadLocal je zapravo
- * mapa čiji su ključevi identifikator dretve koji radi operaciju nad mapom.
+ * Class which stores connections towards database in {@link ThreadLocal}
+ * object. It can be accessed to by using setConnection method to add new
+ * connection to stored connections and by using getConnection method to get
+ * connection.
  * 
- * @author marcupic
+ * @author tin
  *
  */
 public class SQLConnectionProvider {
 
-	private static ThreadLocal<Connection> connections = new ThreadLocal<>();
-	
-	/**
-	 * Postavi vezu za trenutnu dretvu (ili obriši zapis iz mape ako je argument <code>null</code>).
-	 * 
-	 * @param con veza prema bazi
-	 */
-	public static void setConnection(Connection con) {
-		if(con==null) {
-			connections.remove();
-		} else {
-			connections.set(con);
-		}
-	}
-	
-	/**
-	 * Dohvati vezu koju trenutna dretva (pozivatelj) smije koristiti.
-	 * 
-	 * @return vezu prema bazi podataka
-	 */
-	public static Connection getConnection() {
-		return connections.get();
-	}
-	
+  /**
+   * Collection of connections. Similar to map with thread ids being keys and
+   * {@link Connection} object being values.
+   */
+  private static ThreadLocal<Connection> connections = new ThreadLocal<>();
+
+  /**
+   * Sets given connection for current thread. Con can be <code>null</code> which
+   * effectively removes connection if it exists.
+   * 
+   * @param con connection towards database
+   */
+  public static void setConnection(Connection con) {
+    if(con == null) {
+      connections.remove();
+    } else {
+      connections.set(con);
+    }
+  }
+
+  /**
+   * Gets connection for current thread.
+   * 
+   * @return connection toward database
+   */
+  public static Connection getConnection() {
+    return connections.get();
+  }
+
 }
