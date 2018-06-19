@@ -40,6 +40,9 @@ public class VotesInExcelServlet extends HttpServlet {
     }
     PollData poll = DAOProvider.getDao().getPoll(Long.parseLong(req.getParameter("pollID")));
 
+    if(poll == null) {
+      return;
+    }
     poll.getOptions().sort(new Comparator<PollOption>() {
 
       @Override

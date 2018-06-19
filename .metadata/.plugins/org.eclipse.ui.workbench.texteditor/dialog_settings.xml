@@ -6,12 +6,18 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="workers" key="selection"/>
+		<item value="message" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="Comment"/>
+			<item value="comment"/>
+			<item value="entry"/>
+			<item value="d"/>
+			<item value="basicOptions"/>
+			<item value="sortedVotes"/>
 			<item value="workers"/>
 			<item value="worker"/>
 			<item value="persistent"/>
@@ -21,14 +27,12 @@
 			<item value="rccoo"/>
 			<item value="version"/>
 			<item value="directCall"/>
-			<item value="unsupp"/>
-			<item value="unsup"/>
-			<item value="unsu"/>
-			<item value="rc"/>
-			<item value="split(&quot;=&quot;)"/>
-			<item value="tempPar"/>
 		</list>
 		<list key="replacehistory">
+			<item value="message"/>
+			<item value="form"/>
+			<item value="basicBeerOptions"/>
+			<item value="poll.getOption()"/>
 			<item value="temporary"/>
 			<item value="context"/>
 			<item value="getProperty("/>
@@ -40,10 +44,6 @@
 			<item value="textArea"/>
 			<item value="paste"/>
 			<item value="cut"/>
-			<item value="copy"/>
-			<item value="LJButton"/>
-			<item value="Button"/>
-			<item value=" LJMenuItem"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

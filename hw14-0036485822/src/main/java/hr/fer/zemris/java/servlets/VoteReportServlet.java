@@ -39,7 +39,9 @@ public class VoteReportServlet extends HttpServlet {
     }
 
     PollData poll = DAOProvider.getDao().getPoll(Long.parseLong(req.getParameter("pollID")));
-
+    if(poll == null) {
+      return;
+    }
     PieChart pieChart = new PieChart("Votes", "Popularity", poll.getOptions());
     BufferedImage bim = pieChart.getBufferedImage();
     ByteArrayOutputStream bos = new ByteArrayOutputStream();

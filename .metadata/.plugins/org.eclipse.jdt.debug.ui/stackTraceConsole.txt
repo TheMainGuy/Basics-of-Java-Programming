@@ -1,5 +1,6 @@
-ComplexNumber c1 = new ComplexNumber(2, 3);
-ComplexNumber c2 = ComplexNumber.parse("2.5-3i");
-ComplexNumber c3 = c1.add(ComplexNumber.fromMagnitudeAndAngle(2, 1.57))
-.div(c2).power(3).root(2)[1];
-System.out.println(c3);
+<c:if test="${sessionScope['current.user.id'] == null }">
+        <p>not logged in</p>
+    </c:if>
+    <c:if test="${sessionScope['current.user.id'] != null}">
+        <p><c:out value="${sessionScope['current.user.fn']}"></c:out> ${sessionScope['current.user.ln']} <a href=logout>logout</a></p>
+    </c:if>

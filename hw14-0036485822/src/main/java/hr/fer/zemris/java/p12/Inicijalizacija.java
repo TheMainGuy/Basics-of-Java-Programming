@@ -116,7 +116,10 @@ public class Inicijalizacija implements ServletContextListener {
     ResultSet resultSet = preparedStatement.executeQuery();
     if(!resultSet.next()) {
       createBasicPolls(connection, BasicPolls.getBasicPoll());
+      createBasicPolls(connection, BasicPolls.getBasicBeerPoll());
     }
+    
+    
   }
 
   /**
@@ -172,7 +175,7 @@ public class Inicijalizacija implements ServletContextListener {
         stringBuilder.append(",\n");
       }
     }
-
+    
     return stringBuilder.toString();
   }
 

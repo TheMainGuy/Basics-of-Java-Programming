@@ -11,7 +11,7 @@ package hr.fer.zemris.java.hw07.crypto;
 public class Util {
   /**
    * Method converts hex-encoded {@link String} to byte array. Each pair of
-   * characters if interpreted as one byte made from 2 hexadecimal digits and is
+   * characters is interpreted as one byte made from 2 hexadecimal digits and is
    * converted to 1 byte. Throws exception if {@link String} has odd number of
    * characters or contains invalid characters.
    * 

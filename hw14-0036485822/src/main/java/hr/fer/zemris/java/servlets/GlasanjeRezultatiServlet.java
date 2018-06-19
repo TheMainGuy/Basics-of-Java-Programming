@@ -40,6 +40,10 @@ public class GlasanjeRezultatiServlet extends HttpServlet {
     }
     PollData poll = DAOProvider.getDao().getPoll(Long.parseLong(req.getParameter("pollID")));
 
+    if(poll == null) {
+      resp.getWriter().write("<html><body><h1>There is not poll with given id</h1></body></html>");
+      return;
+    }
     poll.getOptions().sort(new Comparator<PollOption>() {
 
       @Override

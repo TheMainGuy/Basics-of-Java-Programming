@@ -35,6 +35,11 @@ public class GlasanjeGlasajServlet extends HttpServlet {
     }
 
     PollData poll = DAOProvider.getDao().getPoll(Long.parseLong(req.getParameter("pollID")));
+    
+    if(poll == null) {
+      resp.getWriter().write("<html><body><h1>There is not poll with given id</h1></body></html>");
+      return;
+    }
     PollOption selectedOption = null;
     long selectedOptionId = Long.parseLong(req.getParameter("optionID"));
     for (PollOption option : poll.getOptions()) {

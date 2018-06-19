@@ -35,6 +35,11 @@ public class GlasanjeServlet extends HttpServlet {
 
     long id = Long.parseLong(req.getParameter("pollID"));
     PollData poll = DAOProvider.getDao().getPoll(id);
+    
+    if(poll == null) {
+      resp.getWriter().write("<html><body><h1>There is not poll with given id</h1></body></html>");
+      return;
+    }
     req.setAttribute("poll", poll);
     req.getRequestDispatcher("/WEB-INF/pages/glasanjeIndex.jsp").forward(req, resp);
   }
