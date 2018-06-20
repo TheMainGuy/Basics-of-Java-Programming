@@ -17,11 +17,26 @@ import hr.fer.zemris.java.hw15.model.BlogEntry;
 import hr.fer.zemris.java.hw15.model.BlogEntryForm;
 import hr.fer.zemris.java.hw15.model.BlogUser;
 
+/**
+ * Implements servlet, which handles any requests made to servleti/author. This
+ * happens when user follows link to list all author entries, reads entries,
+ * edits entries, saves entries and comments.
+ * 
+ * Method doGet is called when user clicks on any blog user or any of its posts.
+ * It is also called when post edit or new post request arrive.
+ * 
+ * Method doPost is called when user fills form for saving comment, edited or
+ * new post. It checks if user is authorized to do so and if he is, alters
+ * database in order to match with specified information.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/servleti/author/*")
-public class AuthorServlet extends HttpServlet{
-   /**
-   * 
-   */
+public class AuthorServlet extends HttpServlet {
+  /**
+  * Serial version UID.
+  */
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -48,16 +63,16 @@ public class AuthorServlet extends HttpServlet{
         req.setAttribute("blogEntry", DAOProvider.getDAO().getBlogEntry(Long.parseLong(parts[1])));
         req.getRequestDispatcher("/WEB-INF/pages/ShowEntry.jsp").forward(req, resp);
       }
-    } 
+    }
   }
-  
+
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     if(req.getParameter("method").equals("Cancel")) {
       resp.sendRedirect("");
       return;
     }
-    
+
     String[] parts = req.getPathInfo().substring(1).split("/");
     if(parts.length == 2 && parts[1].equals("save")) {
       if(req.getSession().getAttribute("current.user.nick").equals(parts[0])) {
@@ -71,7 +86,7 @@ public class AuthorServlet extends HttpServlet{
       postComment(req, resp);
     }
   }
-  
+
   private void postComment(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     BlogCommentForm form = new BlogCommentForm();
     BlogComment blogComment = new BlogComment();
@@ -86,7 +101,8 @@ public class AuthorServlet extends HttpServlet{
     BlogEntryForm form = new BlogEntryForm();
     form.fillFromHttpRequest(req);
     BlogEntry blogEntry = new BlogEntry();
-    blogEntry.setCreator(DAOProvider.getDAO().getUserFromNick(req.getSession().getAttribute("current.user.nick").toString()));
+    blogEntry.setCreator(
+        DAOProvider.getDAO().getUserFromNick(req.getSession().getAttribute("current.user.nick").toString()));
     form.fillToBlogEntry(blogEntry);
     if(form.getId().equals("0")) {
       DAOProvider.getDAO().addNewEntry(blogEntry);

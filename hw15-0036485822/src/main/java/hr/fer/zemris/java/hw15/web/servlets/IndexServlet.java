@@ -10,10 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import hr.fer.zemris.java.hw15.model.LoginForm;
 
+/**
+ * Implements servlet, which when its doGet method is called, redirects to main
+ * servlet.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/index.jsp")
-public class IndexServlet extends HttpServlet{
+public class IndexServlet extends HttpServlet {
   /**
-   * 
+   * Serial version UID.
    */
   private static final long serialVersionUID = 1L;
 
