@@ -35,8 +35,8 @@ import hr.fer.zemris.java.hw15.model.BlogUser;
 @WebServlet("/servleti/author/*")
 public class AuthorServlet extends HttpServlet {
   /**
-  * Serial version UID.
-  */
+   * Serial version UID.
+   */
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -68,12 +68,14 @@ public class AuthorServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String[] parts = req.getPathInfo().substring(1).split("/");
+    BlogUser blogUser = DAOProvider.getDAO().getUserFromNick(parts[0]);
+    req.setAttribute("selectedUser", blogUser);
     if(req.getParameter("method").equals("Cancel")) {
-      resp.sendRedirect("");
+      resp.sendRedirect(req.getServletContext().getContextPath() + "/servleti/author/" + blogUser.getNick());
       return;
     }
 
-    String[] parts = req.getPathInfo().substring(1).split("/");
     if(parts.length == 2 && parts[1].equals("save")) {
       if(req.getSession().getAttribute("current.user.nick").equals(parts[0])) {
         saveEntry(req, resp);
@@ -81,17 +83,26 @@ public class AuthorServlet extends HttpServlet {
         req.setAttribute("error", "Authorization error");
         req.setAttribute("errorMessage", "You do not have permission to save this entry.");
         req.getRequestDispatcher("/WEB-INF/pages/ErrorPage.jsp").forward(req, resp);
+        return;
       }
     } else if(parts.length == 2 && parts[1].equals("postComment")) {
       postComment(req, resp);
     }
   }
 
-  private void postComment(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  private void postComment(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
     BlogCommentForm form = new BlogCommentForm();
     BlogComment blogComment = new BlogComment();
     form.fillFromHttpRequest(req);
     form.fillToBlogComment(blogComment);
+    form.validate();
+    if(form.hasErrors()) {
+      req.setAttribute("form", form);
+      req.setAttribute("blogEntry", DAOProvider.getDAO().getBlogEntry(blogComment.getBlogEntry().getId()));
+      req.getRequestDispatcher("/WEB-INF/pages/ShowEntry.jsp").forward(req, resp);
+      return;
+    }
+
     blogComment.setPostedOn(Calendar.getInstance().getTime());
     DAOProvider.getDAO().addNewComment(blogComment);
     resp.sendRedirect(blogComment.getBlogEntry().getId().toString());
@@ -100,16 +111,24 @@ public class AuthorServlet extends HttpServlet {
   private void saveEntry(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     BlogEntryForm form = new BlogEntryForm();
     form.fillFromHttpRequest(req);
+    form.validate();
     BlogEntry blogEntry = new BlogEntry();
     blogEntry.setCreator(
         DAOProvider.getDAO().getUserFromNick(req.getSession().getAttribute("current.user.nick").toString()));
     form.fillToBlogEntry(blogEntry);
+    if(form.hasErrors()) {
+      req.setAttribute("form", form);
+      req.setAttribute("blogEntry", blogEntry);
+      req.getRequestDispatcher("/WEB-INF/pages/EntryForm.jsp").forward(req, resp);
+      return;
+    }
     if(form.getId().equals("0")) {
       DAOProvider.getDAO().addNewEntry(blogEntry);
     } else {
       DAOProvider.getDAO().editEntry(blogEntry);
     }
-    resp.sendRedirect("");
+    resp.sendRedirect(
+        req.getServletContext().getContextPath() + "/servleti/author/" + blogEntry.getCreator().getNick());
   }
 
   private void editEntry(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

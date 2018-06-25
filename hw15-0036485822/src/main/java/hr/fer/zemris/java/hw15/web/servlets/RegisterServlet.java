@@ -19,7 +19,7 @@ import hr.fer.zemris.java.hw15.model.SignUpForm;
  * @author tin
  *
  */
-@WebServlet("servleti/register")
+@WebServlet("/servleti/register")
 public class RegisterServlet extends HttpServlet {
 
   /**

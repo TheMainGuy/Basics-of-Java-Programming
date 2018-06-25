@@ -12,32 +12,32 @@ import hr.fer.zemris.java.hw15.dao.DAOProvider;
  * @author tin
  *
  */
-public class SignUpForm extends Form{
+public class SignUpForm extends Form {
   /**
    * User's first name.
    */
   private String firstName;
-  
+
   /**
    * User's last name.
    */
   private String lastName;
-  
+
   /**
    * User's nick.
    */
   private String nick;
-  
+
   /**
    * User's E-mail.
    */
   private String email;
-  
+
   /**
    * User's password.
    */
   private String password;
- 
+
   /**
    * Fills this object's data with parameters from given
    * {@link HttpServletRequest} object.
@@ -51,7 +51,7 @@ public class SignUpForm extends Form{
     this.email = prepare(request.getParameter("email"));
     this.password = prepare(request.getParameter("password"));
   }
-  
+
   /**
    * Fills given {@link BlogUser} object with data from this object.
    * 
@@ -64,7 +64,7 @@ public class SignUpForm extends Form{
     blogUser.setNick(nick);
     blogUser.setPasswordHash(Crypto.digestPassword(password));
   }
-  
+
   @Override
   public void validate() {
     if(firstName.equals("")) {
@@ -80,7 +80,7 @@ public class SignUpForm extends Form{
     }
     if(email.equals("")) {
       errors.put("email", "Email can not be empty.");
-    } else if(email.length() < 3 || email.indexOf('@') == 0 || email.indexOf('@') == email.length() - 1){
+    } else if(email.length() < 3 || email.indexOf('@') == 0 || email.indexOf('@') == email.length() - 1) {
       errors.put("email", "Email is not valid.");
     }
     if(password.equals("")) {

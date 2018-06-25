@@ -1,6 +1,7 @@
 package hr.fer.zemris.java.hw15.web.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +41,8 @@ public class CheckLoginServlet extends HttpServlet {
 
     req.setAttribute("form", form);
     if(form.hasErrors()) {
+      List<String> nicks = DAOProvider.getDAO().getListOfNicks();
+      req.setAttribute("authors", nicks);
       req.getRequestDispatcher("/WEB-INF/pages/MainPage.jsp").forward(req, resp);
       return;
     }

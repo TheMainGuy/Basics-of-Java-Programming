@@ -1,8 +1,5 @@
 package hr.fer.zemris.java.hw15.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -12,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author tin
  *
  */
-public class BlogEntryForm extends Form{
+public class BlogEntryForm extends Form {
   /**
    * Title.
    */
@@ -27,11 +24,6 @@ public class BlogEntryForm extends Form{
    * Unique identifier.
    */
   private String id;
-
-  /**
-   * Map of errors in input.
-   */
-  Map<String, String> errors = new HashMap<>();
 
   /**
    * @return the title

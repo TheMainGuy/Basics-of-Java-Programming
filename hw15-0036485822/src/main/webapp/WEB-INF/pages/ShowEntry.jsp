@@ -13,8 +13,10 @@
 		</p>
 	</c:if>
 	<a href="${pageContext.request.contextPath}/servleti/main">Home</a>
-	<a href="${pageContext.request.contextPath}/servleti/author/${selectedUser.nick}">Back to posts</a>
-	
+	<a
+		href="${pageContext.request.contextPath}/servleti/author/${selectedUser.nick}">Back
+		to posts</a>
+
 	<c:choose>
 		<c:when test="${blogEntry==null}">
       No entry with given id!
@@ -50,21 +52,35 @@
 		</c:otherwise>
 	</c:choose>
 
-	<c:if test="${sessionScope['current.user.nick'] != null}">
 		<form action="postComment" method="post">
 
 			<div>
 				<div>
-					<input type="hidden" name="entryId" value="${blogEntry.id}"/>
+					<input type="hidden" name="entryId" value="${blogEntry.id}" />
 				</div>
 			</div>
-			
-			<div>
-                <div>
-                    <input type="hidden" name="userNick" value="${sessionScope['current.user.nick']}"/>
-                </div>
-            </div>
 
+			<div>
+				<div>
+					<input type="hidden" name="userNick"
+						value="${sessionScope['current.user.nick']}" />
+				</div>
+			</div>
+
+			<c:if test="${sessionScope['current.user.nick'] == null}">
+				<div>
+					<div>
+						<span class="formLabel">Email</span><input type="text"
+							name="email" />
+					</div>
+					<c:if test="${form.hasError('email')}">
+						<div class="greska">
+							<c:out value="${form.getError('email')}" />
+						</div>
+					</c:if>
+				</div>
+			</c:if>
+			
 			<div>
 				<div>
 					<span class="formLabel">Comment</span><input type="text"
@@ -83,7 +99,6 @@
 			</div>
 
 		</form>
-	</c:if>
 
 </body>
 </html>

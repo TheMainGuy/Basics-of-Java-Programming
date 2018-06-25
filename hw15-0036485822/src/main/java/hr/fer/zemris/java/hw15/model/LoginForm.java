@@ -1,8 +1,5 @@
 package hr.fer.zemris.java.hw15.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import hr.fer.zemris.java.hw15.crypto.Crypto;
@@ -15,7 +12,7 @@ import hr.fer.zemris.java.hw15.dao.DAOProvider;
  * @author tin
  *
  */
-public class LoginForm extends Form{
+public class LoginForm extends Form {
   /**
    * User's nick.
    */
@@ -27,11 +24,6 @@ public class LoginForm extends Form{
   private String password;
 
   /**
-   * Map of errors in input.
-   */
-  Map<String, String> errors = new HashMap<>();
-
-  /**
    * Fills this object's data with parameters from given
    * {@link HttpServletRequest} object.
    * 
@@ -41,7 +33,7 @@ public class LoginForm extends Form{
     this.nick = prepare(request.getParameter("nick"));
     this.password = prepare(request.getParameter("password"));
   }
-  
+
   /**
    * @return the nick
    */
