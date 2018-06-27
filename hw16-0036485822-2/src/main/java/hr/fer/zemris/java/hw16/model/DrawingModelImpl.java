@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.function.Function;
 
 import hr.fer.zemris.java.hw16.jvdraw.listeners.DrawingModelListener;
+import hr.fer.zemris.java.hw16.jvdraw.listeners.GeometricalObjectListener;
 import hr.fer.zemris.java.hw16.objects.GeometricalObject;
 
-public class DrawingModelImpl implements DrawingModel {
+public class DrawingModelImpl implements DrawingModel, GeometricalObjectListener{
   List<GeometricalObject> objects = new ArrayList<>();
 
   List<DrawingModelListener> listeners = new ArrayList<>();
@@ -25,6 +26,7 @@ public class DrawingModelImpl implements DrawingModel {
   @Override
   public void add(GeometricalObject object) {
     objects.add(object);
+    object.addGeometricalObjectListener(this);
     notifyListeners(l -> {
       l.objectsAdded(this, objects.size() - 1, objects.size() - 1);
       return null;
@@ -52,6 +54,7 @@ public class DrawingModelImpl implements DrawingModel {
       l.objectsRemoved(this, index, index);
       return null;
     });
+    object.removeGeometricalObjectListener(this);
   }
 
   @Override
@@ -69,6 +72,15 @@ public class DrawingModelImpl implements DrawingModel {
     for (DrawingModelListener listener : listeners) {
       f.apply(listener);
     }
+  }
+
+  @Override
+  public void geometricalObjectChanged(GeometricalObject o) {
+    int index = objects.indexOf(o);
+    notifyListeners(l -> {
+      l.objectsChanged(this, index, index);
+      return null;
+    });
   }
 
 }

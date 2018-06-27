@@ -10,10 +10,10 @@ public abstract class ToolImpl implements Tool {
   private IColorProvider foregroundColor;
   private JDrawingCanvas drawingCanvas;
   private DrawingModel drawingModel;
-  private int startX;
-  private int startY;
-  private int endX;
-  private int endY;
+  protected int startX;
+  protected int startY;
+  protected int endX;
+  protected int endY;
 
   public ToolImpl(DrawingModel drawingModel, IColorProvider foregroundColor, JDrawingCanvas drawingCanvas) {
     this.drawingModel = drawingModel;

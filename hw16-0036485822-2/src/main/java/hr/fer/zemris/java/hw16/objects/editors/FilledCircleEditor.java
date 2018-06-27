@@ -1,12 +1,14 @@
 package hr.fer.zemris.java.hw16.objects.editors;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import hr.fer.zemris.java.hw16.objects.FilledCircle;
 
-public class FilledCircleEditor extends GeometricalObjectEditor{
+public class FilledCircleEditor extends GeometricalObjectEditor {
   /**
    * 
    */
@@ -25,24 +27,57 @@ public class FilledCircleEditor extends GeometricalObjectEditor{
 
   public FilledCircleEditor(FilledCircle filledCircle) {
     this.filledCircle = filledCircle;
-    x = new JTextField(filledCircle.getX());
-    y = new JTextField(filledCircle.getY());
-    radius = new JTextField(filledCircle.getRadius());
-    r = new JTextField(filledCircle.getColor().getRed());
-    g = new JTextField(filledCircle.getColor().getGreen());
-    b = new JTextField(filledCircle.getColor().getBlue());
-    r2 = new JTextField(filledCircle.getFillColor().getRed());
-    g2 = new JTextField(filledCircle.getFillColor().getGreen());
-    b2 = new JTextField(filledCircle.getFillColor().getBlue());
+    this.setLayout(new GridLayout(0, 2));
+    JLabel xText = new JLabel("x");
+    x = new JTextField(10);
+    x.setText(Integer.toString(filledCircle.getX()));
 
+    JLabel yText = new JLabel("y");
+    y = new JTextField(10);
+    y.setText(Integer.toString(filledCircle.getY()));
+
+    JLabel rText = new JLabel("radius");
+    radius = new JTextField(10);
+    radius.setText(Integer.toString(filledCircle.getRadius()));
+
+    JLabel red = new JLabel("red");
+    r = new JTextField(10);
+    r.setText(Integer.toString(filledCircle.getColor().getRed()));
+    JLabel green = new JLabel("green");
+    g = new JTextField(10);
+    g.setText(Integer.toString(filledCircle.getColor().getGreen()));
+    JLabel blue = new JLabel("blue");
+    b = new JTextField(10);
+    b.setText(Integer.toString(filledCircle.getColor().getBlue()));
+    
+    JLabel red2 = new JLabel("fill red");
+    r2 = new JTextField(10);
+    r2.setText(Integer.toString(filledCircle.getFillColor().getRed()));
+    JLabel green2 = new JLabel("fill green");
+    g2 = new JTextField(10);
+    g2.setText(Integer.toString(filledCircle.getFillColor().getGreen()));
+    JLabel blue2 = new JLabel("fill blue");
+    b2 = new JTextField(10);
+    b2.setText(Integer.toString(filledCircle.getFillColor().getBlue()));
+    
+    this.add(xText);
     this.add(x);
+    this.add(yText);
     this.add(y);
+    this.add(rText);
     this.add(radius);
+    
+    this.add(red);
     this.add(r);
+    this.add(green);
     this.add(g);
+    this.add(blue);
     this.add(b);
+    this.add(red2);
     this.add(r2);
+    this.add(green2);
     this.add(g2);
+    this.add(blue2);
     this.add(b2);
   }
 

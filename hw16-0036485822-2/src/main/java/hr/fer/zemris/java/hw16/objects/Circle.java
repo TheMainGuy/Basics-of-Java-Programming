@@ -41,5 +41,10 @@ public class Circle extends GeometricalObject {
   public GeometricalObjectEditor createGeometricalObjectEditor() {
     return new CircleEditor(this);
   }
+  
+  @Override
+  public String toString() {
+    return "Circle (" + getX() + "," + getY() + "), " + getRadius();
+  }
 
 }

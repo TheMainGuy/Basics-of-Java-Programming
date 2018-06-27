@@ -4,13 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -26,6 +33,9 @@ import hr.fer.zemris.java.hw16.jvdraw.tools.LineTool;
 import hr.fer.zemris.java.hw16.jvdraw.tools.Tool;
 import hr.fer.zemris.java.hw16.model.DrawingModel;
 import hr.fer.zemris.java.hw16.model.DrawingModelImpl;
+import hr.fer.zemris.java.hw16.model.DrawingObjectListModel;
+import hr.fer.zemris.java.hw16.objects.GeometricalObject;
+import hr.fer.zemris.java.hw16.objects.editors.GeometricalObjectEditor;
 
 public class JVDraw extends JFrame {
   /**
@@ -126,49 +136,68 @@ public class JVDraw extends JFrame {
     
     drawingCanvas.addMouseListener(mouseListener);
     drawingCanvas.addMouseMotionListener(mouseListener);
-//    drawingCanvas.addMouseListener(new MouseListener() {
-//      
-//      @Override
-//      public void mouseReleased(MouseEvent e) {
-//        currentState.mouseReleased(e);
-//        
-//      }
-//      
-//      @Override
-//      public void mousePressed(MouseEvent e) {
-//        currentState.mousePressed(e);
-//        
-//      }
-//      
-//      @Override
-//      public void mouseExited(MouseEvent e) {
-//      }
-//      
-//      @Override
-//      public void mouseEntered(MouseEvent e) {
-//      }
-//      
-//      @Override
-//      public void mouseClicked(MouseEvent e) {
-//        currentState.mouseClicked(e);
-//      }
-//    });
-//    
-//    drawingCanvas.addMouseMotionListener(new MouseMotionListener() {
-//      
-//      @Override
-//      public void mouseMoved(MouseEvent e) {
-//        currentState.mouseMoved(e);
-//        
-//      }
-//      
-//      @Override
-//      public void mouseDragged(MouseEvent e) {
-//        currentState.mouseDragged(e);
-//      }
-//    });
     
     getContentPane().add(drawingCanvas);
+    
+    DrawingObjectListModel listModel = new DrawingObjectListModel(drawingModel);
+    JList<GeometricalObject> list = new JList<>(listModel);
+    list.addKeyListener(new KeyListener() {
+      
+      @Override
+      public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void keyPressed(KeyEvent e) {
+        int index = list.getSelectedIndex();
+        if(index < 0 || index > drawingModel.getSize()) {
+          return;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_DELETE) {
+          drawingModel.remove(drawingModel.getObject(index));
+        } else if(e.getKeyCode() == KeyEvent.VK_PLUS) {
+          if(index == 0) {
+            return;
+          }
+          drawingModel.changeOrder(drawingModel.getObject(index), -1);
+          list.setSelectedIndex(index - 1);
+        } else if(e.getKeyCode() == KeyEvent.VK_MINUS) {
+          if(index == drawingModel.getSize() - 1) {
+            return;
+          }
+          drawingModel.changeOrder(drawingModel.getObject(index), 1);
+          list.setSelectedIndex(index + 1);
+        }
+        
+      }
+    });
+    
+    list.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if(e.getClickCount() == 2) {
+          GeometricalObject clicked = drawingModel.getObject(list.locationToIndex(e.getPoint()));
+          GeometricalObjectEditor editor = clicked.createGeometricalObjectEditor();
+          if(JOptionPane.showConfirmDialog(null, editor, "Edit", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+            try {
+              editor.checkEditing();
+              editor.acceptEditing();
+            } catch (Exception ex) {
+              JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+          }
+        }
+      }
+    });
+    getContentPane().add(new JScrollPane(list), BorderLayout.EAST);
   }
 
   private void createDrawingCanvas() {

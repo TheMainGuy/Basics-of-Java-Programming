@@ -2,6 +2,8 @@ package hr.fer.zemris.java.hw16.objects;
 
 import java.awt.Color;
 
+import hr.fer.zemris.java.hw16.objects.editors.FilledCircleEditor;
+import hr.fer.zemris.java.hw16.objects.editors.GeometricalObjectEditor;
 import hr.fer.zemris.java.hw16.objects.visitors.GeometricalObjectVisitor;
 
 public class FilledCircle extends Circle {
@@ -33,5 +35,16 @@ public class FilledCircle extends Circle {
   @Override
   public void accept(GeometricalObjectVisitor v) {
     v.visit(this);
+  }
+  
+  @Override
+  public GeometricalObjectEditor createGeometricalObjectEditor() {
+    return new FilledCircleEditor(this);
+  }
+  
+  @Override
+  public String toString() {
+    String colorString = String.format("%02X%02X%02X", fillColor.getRed(), fillColor.getGreen(), fillColor.getBlue()); 
+    return super.toString() + ", #" + colorString;
   }
 }

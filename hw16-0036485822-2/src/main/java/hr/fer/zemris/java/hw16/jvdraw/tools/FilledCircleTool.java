@@ -22,10 +22,14 @@ public class FilledCircleTool extends ToolImpl {
     super.mouseReleased(e);
     getDrawingModel().add(new FilledCircle(getStartX(), getStartY(), getForegroundColor().getCurrentColor(),
         (int) getRadius(), backgroundColor.getCurrentColor()));
+    startX = -1;
   }
 
   @Override
   public void paint(Graphics2D g2d) {
+    if(startX == -1) {
+      return;
+    }
     double radius = getRadius();
     int x = getStartX() - (int) radius;
     int y = getStartY() - (int) radius;

@@ -63,5 +63,10 @@ public class Line extends GeometricalObject {
   public GeometricalObjectEditor createGeometricalObjectEditor() {
     return new LineEditor(this);
   }
+  
+  @Override
+  public String toString() {
+    return "Line (" + getX() + "," + getY() + ")-(" + x2 + "," + y2 + ")";
+  }
 
 }

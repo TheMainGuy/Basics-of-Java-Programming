@@ -18,10 +18,14 @@ public class LineTool extends ToolImpl{
     super.mouseReleased(e);
     getDrawingModel().add(new Line(getStartX(), getStartY(), getForegroundColor().getCurrentColor(),
         getEndX(), getEndY()));
+    startX = -1;
   }
 
   @Override
   public void paint(Graphics2D g2d) {
+    if(startX == -1) {
+      return;
+    }
     g2d.setColor(getForegroundColor().getCurrentColor());
     g2d.drawLine(getStartX(), getStartY(),
         getEndX(), getEndY());
