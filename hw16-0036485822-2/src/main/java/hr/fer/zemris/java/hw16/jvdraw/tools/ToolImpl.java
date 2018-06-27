@@ -1,35 +1,39 @@
 package hr.fer.zemris.java.hw16.jvdraw.tools;
 
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
 import hr.fer.zemris.java.hw16.jvdraw.components.JDrawingCanvas;
 import hr.fer.zemris.java.hw16.jvdraw.listeners.IColorProvider;
 import hr.fer.zemris.java.hw16.model.DrawingModel;
-import hr.fer.zemris.java.hw16.objects.Line;
 
 public abstract class ToolImpl implements Tool {
-  private DrawingModel drawingModel;
   private IColorProvider foregroundColor;
   private JDrawingCanvas drawingCanvas;
+  private DrawingModel drawingModel;
   private int startX;
   private int startY;
   private int endX;
   private int endY;
+
+  public ToolImpl(DrawingModel drawingModel, IColorProvider foregroundColor, JDrawingCanvas drawingCanvas) {
+    this.drawingModel = drawingModel;
+    this.foregroundColor = foregroundColor;
+    this.drawingCanvas = drawingCanvas;
+  }
 
   @Override
   public void mousePressed(MouseEvent e) {
     startX = e.getX();
     startY = e.getY();
   }
-  
+
   @Override
   public void mouseReleased(MouseEvent e) {
     endX = e.getX();
     endY = e.getY();
     drawingCanvas.repaint();
   }
-  
+
   @Override
   public void mouseClicked(MouseEvent e) {
   }
@@ -37,7 +41,7 @@ public abstract class ToolImpl implements Tool {
   @Override
   public void mouseMoved(MouseEvent e) {
   }
-  
+
   @Override
   public void mouseDragged(MouseEvent e) {
     endX = e.getX();
@@ -45,10 +49,46 @@ public abstract class ToolImpl implements Tool {
     drawingCanvas.repaint();
   }
 
-  @Override
-  public void paint(Graphics2D g2d) {
-    g2d.setColor(foregroundColor.getCurrentColor());
-    g2d.drawLine(startX, startY,
-        endX, endY);
+  /**
+   * @return the startX
+   */
+  public int getStartX() {
+    return startX;
   }
+
+  /**
+   * @return the startY
+   */
+  public int getStartY() {
+    return startY;
+  }
+
+  /**
+   * @return the endX
+   */
+  public int getEndX() {
+    return endX;
+  }
+
+  /**
+   * @return the endY
+   */
+  public int getEndY() {
+    return endY;
+  }
+
+  /**
+   * @return the foregroundColor
+   */
+  public IColorProvider getForegroundColor() {
+    return foregroundColor;
+  }
+
+  /**
+   * @return the drawingModel
+   */
+  public DrawingModel getDrawingModel() {
+    return drawingModel;
+  }
+
 }
