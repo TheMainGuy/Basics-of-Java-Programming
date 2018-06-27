@@ -6,12 +6,16 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="stopW" key="selection"/>
+		<item value="filledCircle" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="circle"/>
+			<item value="Circle"/>
+			<item value="line"/>
+			<item value="JTextField"/>
 			<item value="stopWordsFilePath"/>
 			<item value="stopW"/>
 			<item value="stopWor"/>
@@ -23,12 +27,12 @@
 			<item value="entry"/>
 			<item value="d"/>
 			<item value="basicOptions"/>
-			<item value="sortedVotes"/>
-			<item value="workers"/>
-			<item value="worker"/>
-			<item value="persistent"/>
 		</list>
 		<list key="replacehistory">
+			<item value="filledCircle"/>
+			<item value="FilledCircle"/>
+			<item value="circle"/>
+			<item value="private JTextField"/>
 			<item value="FrequencyVector"/>
 			<item value="Vector"/>
 			<item value="Vect"/>
@@ -40,10 +44,6 @@
 			<item value="context"/>
 			<item value="getProperty("/>
 			<item value="serverProperties"/>
-			<item value="temporaryParameter"/>
-			<item value="unique"/>
-			<item value="sortDescending"/>
-			<item value="sortAscending"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -26,6 +26,9 @@
 	<item value="3" key="CallHierarchyViewPart.orientation"/>
 	<list key="SearchScopeActionGroup.working_set">
 	</list>
+	<section name="SelfEncapsulateFieldWizard">
+		<item value="false" key="GenerateJavadoc"/>
+	</section>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item value="2" key="layout"/>
 		<item value="true" key="group_libraries"/>
@@ -191,15 +194,27 @@
 		<item value="false" key="create_package_info_java"/>
 	</section>
 	<section name="JavaSearchPage">
-		<item value="2" key="HISTORY_SIZE"/>
-		<item value="false" key="CASE_SENSITIVE"/>
+		<item value="3" key="HISTORY_SIZE"/>
+		<item value="true" key="CASE_SENSITIVE"/>
 		<item value="15" key="INCLUDE_MASK"/>
-		<section name="HISTORY0">
+		<section name="HISTORY2">
 			<item value="false" key="isCaseSensitive"/>
 			<item value="" key="javaElement"/>
 			<item value="0" key="scope"/>
 			<item value="15" key="includeMask"/>
-			<item value="blog" key="pattern"/>
+			<item value="arguments" key="pattern"/>
+			<item value="2" key="limitTo"/>
+			<item value="0" key="matchLocations"/>
+			<item value="0" key="searchFor"/>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY0">
+			<item value="true" key="isCaseSensitive"/>
+			<item value="" key="javaElement"/>
+			<item value="0" key="scope"/>
+			<item value="15" key="includeMask"/>
+			<item value="Void" key="pattern"/>
 			<item value="2" key="limitTo"/>
 			<item value="0" key="matchLocations"/>
 			<item value="0" key="searchFor"/>
@@ -211,7 +226,7 @@
 			<item value="" key="javaElement"/>
 			<item value="0" key="scope"/>
 			<item value="15" key="includeMask"/>
-			<item value="arguments" key="pattern"/>
+			<item value="blog" key="pattern"/>
 			<item value="2" key="limitTo"/>
 			<item value="0" key="matchLocations"/>
 			<item value="0" key="searchFor"/>

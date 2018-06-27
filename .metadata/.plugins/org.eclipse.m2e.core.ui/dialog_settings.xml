@@ -14,6 +14,7 @@
 	</section>
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw16-0036485822-2"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw16-0036485822-1"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw15-0036485822"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw14-0036485822"/>
@@ -28,7 +29,6 @@
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw04-0036485822"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw03-0036485822"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw02-0036485822"/>
-			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw01-0036485822"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>

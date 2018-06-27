@@ -1,6 +1,0 @@
-<c:if test="${sessionScope['current.user.id'] == null }">
-        <p>not logged in</p>
-    </c:if>
-    <c:if test="${sessionScope['current.user.id'] != null}">
-        <p><c:out value="${sessionScope['current.user.fn']}"></c:out> ${sessionScope['current.user.ln']} <a href=logout>logout</a></p>
-    </c:if>
