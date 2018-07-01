@@ -6,9 +6,25 @@ import java.awt.event.MouseMotionListener;
 
 import hr.fer.zemris.java.hw16.jvdraw.tools.Tool;
 
+/**
+ * Implements simple mouse listener which combines {@link MouseListener} and
+ * {@link MouseMotionListener} interfaces in order to simplify and organize
+ * code.
+ * 
+ * @author tin
+ *
+ */
 public class CustomMouseListener implements MouseListener, MouseMotionListener {
+  /**
+   * Current drawing tool.
+   */
   private Tool currentState;
 
+  /**
+   * Constructor.
+   * 
+   * @param currentState current state
+   */
   public CustomMouseListener(Tool currentState) {
     this.currentState = currentState;
   }

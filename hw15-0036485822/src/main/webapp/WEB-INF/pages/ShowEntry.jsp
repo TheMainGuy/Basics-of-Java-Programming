@@ -17,6 +17,7 @@
 		href="${pageContext.request.contextPath}/servleti/author/${selectedUser.nick}">Back
 		to posts</a>
 
+<br>
 	<c:choose>
 		<c:when test="${blogEntry==null}">
       No entry with given id!
@@ -49,56 +50,57 @@
 					</c:forEach>
 				</ul>
 			</c:if>
-		</c:otherwise>
-	</c:choose>
 
-		<form action="postComment" method="post">
 
-			<div>
-				<div>
-					<input type="hidden" name="entryId" value="${blogEntry.id}" />
-				</div>
-			</div>
+			<form action="postComment" method="post">
 
-			<div>
-				<div>
-					<input type="hidden" name="userNick"
-						value="${sessionScope['current.user.nick']}" />
-				</div>
-			</div>
-
-			<c:if test="${sessionScope['current.user.nick'] == null}">
 				<div>
 					<div>
-						<span class="formLabel">Email</span><input type="text"
-							name="email" />
+						<input type="hidden" name="entryId" value="${blogEntry.id}" />
 					</div>
-					<c:if test="${form.hasError('email')}">
+				</div>
+
+				<div>
+					<div>
+						<input type="hidden" name="userNick"
+							value="${sessionScope['current.user.nick']}" />
+					</div>
+				</div>
+
+				<c:if test="${sessionScope['current.user.nick'] == null}">
+					<div>
+						<div>
+							<span class="formLabel">Email</span><input type="text"
+								name="email" />
+						</div>
+						<c:if test="${form.hasError('email')}">
+							<div class="greska">
+								<c:out value="${form.getError('email')}" />
+							</div>
+						</c:if>
+					</div>
+				</c:if>
+
+				<div>
+					<div>
+						<span class="formLabel">Comment</span><input type="text"
+							name="comment" />
+					</div>
+					<c:if test="${form.hasError('comment')}">
 						<div class="greska">
-							<c:out value="${form.getError('email')}" />
+							<c:out value="${form.getError('comment')}" />
 						</div>
 					</c:if>
 				</div>
-			</c:if>
-			
-			<div>
-				<div>
-					<span class="formLabel">Comment</span><input type="text"
-						name="comment" />
+
+				<div class="formControls">
+					<span class="formLabel">&nbsp;</span> <input type="submit"
+						name="method" value="Comment">
 				</div>
-				<c:if test="${form.hasError('comment')}">
-					<div class="greska">
-						<c:out value="${form.getError('comment')}" />
-					</div>
-				</c:if>
-			</div>
 
-			<div class="formControls">
-				<span class="formLabel">&nbsp;</span> <input type="submit"
-					name="method" value="Comment">
-			</div>
-
-		</form>
+			</form>
+		</c:otherwise>
+	</c:choose>
 
 </body>
 </html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gallery</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/htmlescaping.js"></script>
+<script type="text/javascript">
+	function getTags() {
+		var xmlhttp;
+
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				let text = xmlhttp.responseText;
+				let tags = JSON.parse(text);
+				let html = "<h1>List of gallery tags</h1><br>";
+				for (let i = 0; i < tags.length; i++) {
+					//html += "<button id=\"" + tags[i] + "\">" + tags[i]
+					//		+ "</button><br>\n";
+					//html += "<script>document.getElementById(\"" + tags[i]
+					//		+ "\").addEventListener(\"click\", alert(\"test\"));<\/script>";
+					let btn = document.createElement("BUTTON");
+					btn.addEventListener("click", function() {
+						getImages(tags[i]);
+					});
+					let t = document.createTextNode(tags[i]);
+					btn.appendChild(t);
+					let br = document.createElement("BR");
+					document.getElementById("content").appendChild(btn);
+					document.getElementById("content").appendChild(br);
+				}
+
+				//document.getElementById("content").innerHTML = html;
+				for (let i = 0; i < tags.length; i++) {
+					//$(tags[i]).on("click", getImages(tags[i]));
+
+				}
+			}
+		}
+		xmlhttp.open("GET", "servlets/tags?dummy=" + Math.random(), true);
+		xmlhttp.send();
+	}
+	
+	function getImages(tag) {
+        var xmlhttp;
+        document.getElementById("test").innerHTML = "<p> button pressed </p>";
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                let text = xmlhttp.responseText;
+                let images = JSON.parse(text);
+                let html = "<p>Images for tag" + tag + "</p><br>";
+                for (var i = 0; i < images.length; i++) {
+                    //html += "<img src=\"/WEB-INF/slike/" + images.path + "\">";
+                    html += "<test>";
+                }
+                alert("test");
+                document.getElementById("images").innerHTML = html;
+            }
+        }
+        xmlhttp.open("GET", "rest/tag/" + tag, true);
+
+        xmlhttp.send();
+
+    }
+</script>
+</head>
+<body>
+	<div id="content">
+		<h1>Welcome to simple gallery!</h1>
+		<p>Please choose tag to display images from specific category</p>
+		<script>
+			getTags();
+		</script>
+	</div>
+
+	<div id="images">
+		<p>test</p>
+	</div>
+	<div id="test"></div>
+
+</body>
+</html>

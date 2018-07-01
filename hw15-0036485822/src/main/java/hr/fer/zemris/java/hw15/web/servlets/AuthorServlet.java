@@ -44,9 +44,8 @@ public class AuthorServlet extends HttpServlet {
     String[] parts = req.getPathInfo().substring(1).split("/");
     BlogUser blogUser = DAOProvider.getDAO().getUserFromNick(parts[0]);
     if(blogUser == null) {
-      req.setAttribute("error", "404");
-      req.setAttribute("errorMessage", "Author does not exist.");
-      req.getRequestDispatcher("/WEB-INF/pages/ErrorPage.jsp").forward(req, resp);
+      error(req, resp, "404", "Author does not exist.");
+      return;
     }
     if(parts.length == 1) {
       List<BlogEntry> entries = DAOProvider.getDAO().getListOfEntries(blogUser.getId());
@@ -55,12 +54,26 @@ public class AuthorServlet extends HttpServlet {
       req.getRequestDispatcher("/WEB-INF/pages/ListEntries.jsp").forward(req, resp);
     } else if(parts.length == 2) {
       req.setAttribute("selectedUser", blogUser);
-      if(parts[1].equals("new")) {
-        createNewEntry(req, resp);
-      } else if(parts[1].startsWith("edit")) {
-        editEntry(req, resp);
+      if(parts[1].equals("new") || parts[1].equals("edit")) {
+        if(req.getSession().getAttribute("current.user.nick") == null
+            || !req.getSession().getAttribute("current.user.nick").equals(parts[0])) {
+          System.out.println(req.getSession().getAttribute("current.user.nick"));
+          System.out.println(parts[0]);
+          error(req, resp, "550", "You are not authorized to edit this post");
+          return;
+        }
+        if(parts[1].equals("new")) {
+          createNewEntry(req, resp);
+        } else if(parts[1].startsWith("edit")) {
+          editEntry(req, resp);
+        }
       } else {
-        req.setAttribute("blogEntry", DAOProvider.getDAO().getBlogEntry(Long.parseLong(parts[1])));
+        try {
+          req.setAttribute("blogEntry", DAOProvider.getDAO().getBlogEntry(Long.parseLong(parts[1])));
+        } catch (Exception e) {
+          error(req, resp, "400", "Provided post can not be interpreted as a number");
+          return;
+        }
         req.getRequestDispatcher("/WEB-INF/pages/ShowEntry.jsp").forward(req, resp);
       }
     }
@@ -80,9 +93,7 @@ public class AuthorServlet extends HttpServlet {
       if(req.getSession().getAttribute("current.user.nick").equals(parts[0])) {
         saveEntry(req, resp);
       } else {
-        req.setAttribute("error", "Authorization error");
-        req.setAttribute("errorMessage", "You do not have permission to save this entry.");
-        req.getRequestDispatcher("/WEB-INF/pages/ErrorPage.jsp").forward(req, resp);
+        error(req, resp, "Authorization error", "You do not have permission to save this entry.");
         return;
       }
     } else if(parts.length == 2 && parts[1].equals("postComment")) {
@@ -90,6 +101,17 @@ public class AuthorServlet extends HttpServlet {
     }
   }
 
+  /**
+   * Posts comment from given request. Comment must have email address and body in
+   * order to be valid. If the comment is not valid, it will not be posted. After
+   * saving comment, user will be redirected to blog entry the comment was posted
+   * on.
+   * 
+   * @param req request
+   * @param resp response
+   * @throws IOException if there is problem with database
+   * @throws ServletException if there is problem with forwarding
+   */
   private void postComment(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
     BlogCommentForm form = new BlogCommentForm();
     BlogComment blogComment = new BlogComment();
@@ -108,6 +130,16 @@ public class AuthorServlet extends HttpServlet {
     resp.sendRedirect(blogComment.getBlogEntry().getId().toString());
   }
 
+  /**
+   * Saves entry from request. Entry must have title and body in order to be
+   * valid. If the entry is not valid, it will not be posted. After saving entry,
+   * user will be redirected to his list of blog entries.
+   * 
+   * @param req request
+   * @param resp response
+   * @throws ServletException if there is problem with database
+   * @throws IOException if there is problem with forwarding
+   */
   private void saveEntry(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     BlogEntryForm form = new BlogEntryForm();
     form.fillFromHttpRequest(req);
@@ -131,19 +163,72 @@ public class AuthorServlet extends HttpServlet {
         req.getServletContext().getContextPath() + "/servleti/author/" + blogEntry.getCreator().getNick());
   }
 
+  /**
+   * Sets attributes for editing existing entry. Redirects user to entry form
+   * filled with data from old entry.
+   * 
+   * @param req request
+   * @param resp response
+   * @throws ServletException if there is problem with database
+   * @throws IOException if there is problem with forwarding
+   */
   private void editEntry(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    BlogEntry blogEntry = DAOProvider.getDAO().getBlogEntry(Long.parseLong(req.getParameter("id")));
+    BlogEntry blogEntry = null;
+    try {
+      blogEntry = DAOProvider.getDAO().getBlogEntry(Long.parseLong(req.getParameter("id")));
+      if(blogEntry == null) {
+        throw new NullPointerException();
+      }
+      if(!req.getSession().getAttribute("current.user.nick").equals(blogEntry.getCreator().getNick())) {
+        error(req, resp, "550", "You are not authorized to edit this post");
+        return;
+      }
+    } catch (NumberFormatException e) {
+
+      error(req, resp, "404", "Provided post can not be interpreted as a number");
+      return;
+    } catch (Exception e) {
+      error(req, resp, "400", "There is no post with provided id");
+      return;
+    }
     BlogEntryForm form = new BlogEntryForm();
     form.fillFromBlogEntry(blogEntry);
     req.setAttribute("form", form);
     req.getRequestDispatcher("/WEB-INF/pages/EntryForm.jsp").forward(req, resp);
   }
 
+  /**
+   * Sets attributes for creating new entry. Redirects user to empty entry form.
+   * 
+   * @param req request
+   * @param resp response
+   * @throws ServletException if there is problem with database
+   * @throws IOException if there is problem with forwarding
+   */
   private void createNewEntry(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     BlogEntry blogEntry = new BlogEntry();
     BlogEntryForm form = new BlogEntryForm();
     form.fillFromBlogEntry(blogEntry);
     req.setAttribute("form", form);
     req.getRequestDispatcher("/WEB-INF/pages/EntryForm.jsp").forward(req, resp);
+  }
+
+  /**
+   * Sends error with given error and error message by filling request with error
+   * information and forwarding to ErrorPage.jsp.
+   * 
+   * @param req request
+   * @param resp response
+   * @param error error
+   * @param errorMessage error message
+   * @throws IOException
+   * @throws ServletException
+   */
+  private void error(HttpServletRequest req, HttpServletResponse resp, String error, String errorMessage)
+      throws ServletException, IOException {
+    req.setAttribute("error", error);
+    req.setAttribute("errorMessage", errorMessage);
+    req.getRequestDispatcher("/WEB-INF/pages/ErrorPage.jsp").forward(req, resp);
+    return;
   }
 }

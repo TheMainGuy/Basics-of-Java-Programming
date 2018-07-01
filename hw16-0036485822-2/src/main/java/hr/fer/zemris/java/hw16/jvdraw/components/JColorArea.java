@@ -16,6 +16,8 @@ import hr.fer.zemris.java.hw16.jvdraw.listeners.ColorChangeListener;
 import hr.fer.zemris.java.hw16.jvdraw.listeners.IColorProvider;
 
 /**
+ * Implements small color area which can be clicked on to change its color. When
+ * clicked, opens {@link JColorChooser} to allow user to choose color.
  * 
  * @author tin
  *
@@ -23,7 +25,7 @@ import hr.fer.zemris.java.hw16.jvdraw.listeners.IColorProvider;
 public class JColorArea extends JComponent implements IColorProvider {
 
   /**
-   * 
+   * Serial version UID.
    */
   private static final long serialVersionUID = 1L;
 

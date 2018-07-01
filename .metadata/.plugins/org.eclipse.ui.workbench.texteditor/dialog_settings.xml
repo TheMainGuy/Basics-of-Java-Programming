@@ -6,32 +6,36 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="filledCircle" key="selection"/>
+		<item value="exitAc" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="exitAc"/>
+			<item value="exit"/>
+			<item value="fc"/>
+			<item value="saveDo"/>
+			<item value="saveDocument("/>
+			<item value="DocumentAs"/>
+			<item value="documentas"/>
+			<item value="saveas"/>
 			<item value="circle"/>
-			<item value="Circle"/>
 			<item value="line"/>
-			<item value="JTextField"/>
-			<item value="stopWordsFilePath"/>
-			<item value="stopW"/>
-			<item value="stopWor"/>
-			<item value="stop"/>
-			<item value="Vector"/>
-			<item value="vector3"/>
-			<item value="Comment"/>
-			<item value="comment"/>
-			<item value="entry"/>
-			<item value="d"/>
-			<item value="basicOptions"/>
+			<item value="list.getSelectedIndex()"/>
+			<item value="arg0"/>
+			<item value="start"/>
+			<item value="endX"/>
+			<item value="paintCom"/>
 		</list>
 		<list key="replacehistory">
+			<item value="c"/>
 			<item value="filledCircle"/>
-			<item value="FilledCircle"/>
 			<item value="circle"/>
+			<item value="index"/>
+			<item value="e"/>
+			<item value="getEndX()"/>
+			<item value="FilledCircle"/>
 			<item value="private JTextField"/>
 			<item value="FrequencyVector"/>
 			<item value="Vector"/>
@@ -40,10 +44,6 @@
 			<item value="form"/>
 			<item value="basicBeerOptions"/>
 			<item value="poll.getOption()"/>
-			<item value="temporary"/>
-			<item value="context"/>
-			<item value="getProperty("/>
-			<item value="serverProperties"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

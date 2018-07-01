@@ -21,14 +21,14 @@ public interface IColorProvider {
    * Adds new listener to list of listeners. Each listener should be notified when
    * color property changes.
    * 
-   * @param l listener
+   * @param l listener to be added
    */
   public void addColorChangeListener(ColorChangeListener l);
 
   /**
-   * Removes
+   * Removes listener from list of listeners.
    * 
-   * @param l
+   * @param l listener to be removed
    */
   public void removeColorChangeListener(ColorChangeListener l);
 }

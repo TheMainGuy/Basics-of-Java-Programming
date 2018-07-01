@@ -4,17 +4,60 @@ import java.awt.event.MouseEvent;
 
 import hr.fer.zemris.java.hw16.jvdraw.components.JDrawingCanvas;
 import hr.fer.zemris.java.hw16.jvdraw.listeners.IColorProvider;
-import hr.fer.zemris.java.hw16.model.DrawingModel;
+import hr.fer.zemris.java.hw16.jvdraw.model.DrawingModel;
 
+/**
+ * Abstract class which implements basic functionalities defined in {@link Tool}
+ * interface. Classes which override methods from this class should call that
+ * overriden method before doing anything else.
+ * 
+ * @author tin
+ *
+ */
 public abstract class ToolImpl implements Tool {
+  
+  /**
+   * Foreground color.
+   */
   private IColorProvider foregroundColor;
+  
+  /**
+   * Reference to drawing canvas.
+   */
   private JDrawingCanvas drawingCanvas;
+  
+  /**
+   * Reference to drawing model.
+   */
   private DrawingModel drawingModel;
+  
+  /**
+   * x coordinate where mouse was pressed.
+   */
   protected int startX;
+  
+  /**
+   * y coordinate where mouse was pressed.
+   */
   protected int startY;
+  
+  /**
+   * x coordinate where mouse was released.
+   */
   protected int endX;
+  
+  /**
+   * y coordinate where mouse was released.
+   */
   protected int endY;
 
+  /**
+   * Constructor.
+   * 
+   * @param drawingModel drawing model
+   * @param foregroundColor foreground color
+   * @param drawingCanvas background color
+   */
   public ToolImpl(DrawingModel drawingModel, IColorProvider foregroundColor, JDrawingCanvas drawingCanvas) {
     this.drawingModel = drawingModel;
     this.foregroundColor = foregroundColor;

@@ -21,10 +21,22 @@ public class JColorInfo extends JLabel implements ColorChangeListener {
    */
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Reference to first color provider.
+   */
   private IColorProvider colorArea1;
 
+  /**
+   * Reference to second color provider.
+   */
   private IColorProvider colorArea2;
 
+  /**
+   * Constructor.
+   * 
+   * @param colorArea1 reference to first color provider
+   * @param colorArea2 reference to second color provider
+   */
   public JColorInfo(JColorArea colorArea1, JColorArea colorArea2) {
     this.colorArea1 = colorArea1;
     this.colorArea2 = colorArea2;
@@ -33,6 +45,10 @@ public class JColorInfo extends JLabel implements ColorChangeListener {
     updateInfo();
   }
 
+  /**
+   * Helper method which updates this object's text using information from
+   * {@link IColorProvider} objects.
+   */
   private void updateInfo() {
     Color foregroundColor = colorArea1.getCurrentColor();
     Color backgroundColor = colorArea2.getCurrentColor();

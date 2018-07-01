@@ -1,6 +1,6 @@
 package hr.fer.zemris.java.hw16.jvdraw.listeners;
 
-import hr.fer.zemris.java.hw16.model.DrawingModel;
+import hr.fer.zemris.java.hw16.jvdraw.model.DrawingModel;
 
 /**
  * Defines listener which listens to {@link DrawingModel} object for changes in
