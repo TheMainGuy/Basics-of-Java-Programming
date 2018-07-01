@@ -15,7 +15,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-import com.google.gson.Gson;
+import org.json.JSONObject;
+
 import com.google.gson.reflect.TypeToken;
 
 import hr.fer.zemris.java.hw17.gallery.model.Image;
@@ -26,17 +27,30 @@ public class ImageListWriter implements MessageBodyWriter<List<Image>> {
 
   @Override
   public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-    return type == ArrayList.class;
+    return type == ArrayList.class && genericType.equals(new TypeToken<List<Image>>() {}.getType());
   }
 
   @Override
-  public void writeTo(List<Image> imageList, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType,
-      MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
+  public void writeTo(List<Image> imageList, Class<?> type, Type genericType, Annotation[] annotations,
+      MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
       throws IOException, WebApplicationException {
-    Gson gson = new Gson();
-    Type listType = new TypeToken<List<Image>>() {}.getType();
-    entityStream.write(gson.toJson(imageList, listType).toString().getBytes(StandardCharsets.UTF_8));
-
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("[");
+    boolean isFirst = true;
+    for(Image image : imageList) {
+      if(isFirst) {
+        isFirst = false;
+      } else {
+        stringBuilder.append(", ");
+      }
+      JSONObject imageJSON = new JSONObject();
+      imageJSON.put("name", image.getName());
+      imageJSON.put("path", image.getPath().getFileName());
+      imageJSON.put("tags", image.getTags());
+      stringBuilder.append(imageJSON.toString());
+    }
+    stringBuilder.append("]");
+    entityStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
   }
 
 }

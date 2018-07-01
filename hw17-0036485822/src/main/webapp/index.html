@@ -45,39 +45,43 @@
 				}
 			}
 		}
-		xmlhttp.open("GET", "servlets/tags?dummy=" + Math.random(), true);
+		xmlhttp.open("GET", "rest/tags?dummy=" + Math.random(), true);
 		xmlhttp.send();
 	}
-	
+
 	function getImages(tag) {
-        var xmlhttp;
-        document.getElementById("test").innerHTML = "<p> button pressed </p>";
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
+		var xmlhttp;
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
 
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                let text = xmlhttp.responseText;
-                let images = JSON.parse(text);
-                let html = "<p>Images for tag" + tag + "</p><br>";
-                for (var i = 0; i < images.length; i++) {
-                    //html += "<img src=\"/WEB-INF/slike/" + images.path + "\">";
-                    html += "<test>";
-                }
-                alert("test");
-                document.getElementById("images").innerHTML = html;
-            }
-        }
-        xmlhttp.open("GET", "rest/tag/" + tag, true);
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				let text = xmlhttp.responseText;
+				let images = JSON.parse(text);
+				let html = "<p>Images for tag " + tag + "</p><br>";
+				html += "<p> number of images: " + images.length + " </p>";
+				for (var i = 0; i < images.length; i++) {
+					html += "<img src=\"" + getContextPath() + "/thumbnail/" + images[i].path + "\">";
+					html += "<p>path: " + images[i].path + "</p>";
+					html += "<p>name: " + images[i].name + "</p>";
+				}
+				document.getElementById("images").innerHTML = html;
+			}
+		}
+		xmlhttp.open("GET", "rest/tag/" + tag, true);
 
-        xmlhttp.send();
+		xmlhttp.send();
+	}
 
-    }
+	function getContextPath() {
+		return window.location.pathname.substring(0, window.location.pathname
+				.indexOf("/", 2));
+	}
 </script>
 </head>
 <body>

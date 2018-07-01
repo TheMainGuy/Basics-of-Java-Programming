@@ -27,9 +27,6 @@ public class ImageJSON {
         images.add(image);
       }
     }
-    for(Image image : images) {
-      System.out.println(image);
-    }
     GenericEntity<List<Image>> entity = new GenericEntity<List<Image>>(images) {};
     return Response.ok(entity).build();
   }
