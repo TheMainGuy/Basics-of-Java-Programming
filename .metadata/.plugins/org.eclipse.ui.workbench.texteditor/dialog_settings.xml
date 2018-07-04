@@ -6,12 +6,14 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="exitAc" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="alert"/>
+			<item value="jar"/>
 			<item value="exitAc"/>
 			<item value="exit"/>
 			<item value="fc"/>
@@ -25,8 +27,6 @@
 			<item value="list.getSelectedIndex()"/>
 			<item value="arg0"/>
 			<item value="start"/>
-			<item value="endX"/>
-			<item value="paintCom"/>
 		</list>
 		<list key="replacehistory">
 			<item value="c"/>

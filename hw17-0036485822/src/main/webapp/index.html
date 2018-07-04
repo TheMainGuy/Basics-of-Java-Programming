@@ -9,39 +9,21 @@
 	function getTags() {
 		var xmlhttp;
 
-		if (window.XMLHttpRequest) {
-			// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp = new XMLHttpRequest();
-		} else {
-			// code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
+		xmlhttp = getXmlhttp();
 
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				let text = xmlhttp.responseText;
 				let tags = JSON.parse(text);
-				let html = "<h1>List of gallery tags</h1><br>";
+				let html = "<h1>List of gallery tags</h1>";
 				for (let i = 0; i < tags.length; i++) {
-					//html += "<button id=\"" + tags[i] + "\">" + tags[i]
-					//		+ "</button><br>\n";
-					//html += "<script>document.getElementById(\"" + tags[i]
-					//		+ "\").addEventListener(\"click\", alert(\"test\"));<\/script>";
 					let btn = document.createElement("BUTTON");
 					btn.addEventListener("click", function() {
 						getImages(tags[i]);
 					});
 					let t = document.createTextNode(tags[i]);
 					btn.appendChild(t);
-					let br = document.createElement("BR");
 					document.getElementById("content").appendChild(btn);
-					document.getElementById("content").appendChild(br);
-				}
-
-				//document.getElementById("content").innerHTML = html;
-				for (let i = 0; i < tags.length; i++) {
-					//$(tags[i]).on("click", getImages(tags[i]));
-
 				}
 			}
 		}
@@ -51,26 +33,31 @@
 
 	function getImages(tag) {
 		var xmlhttp;
-		if (window.XMLHttpRequest) {
-			// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp = new XMLHttpRequest();
-		} else {
-			// code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
+
+		xmlhttp = getXmlhttp();
 
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				let text = xmlhttp.responseText;
 				let images = JSON.parse(text);
-				let html = "<p>Images for tag " + tag + "</p><br>";
+				let html = "<p>Images for tag: " + tag + "</p><br>";
 				html += "<p> number of images: " + images.length + " </p>";
-				for (var i = 0; i < images.length; i++) {
-					html += "<img src=\"" + getContextPath() + "/thumbnail/" + images[i].path + "\">";
-					html += "<p>path: " + images[i].path + "</p>";
-					html += "<p>name: " + images[i].name + "</p>";
-				}
 				document.getElementById("images").innerHTML = html;
+				for (var i = 0; i < images.length; i++) {
+					let img = document.createElement("IMG");
+					img.src = getContextPath() + "/thumbnail/" + images[i].path;
+					img.id = "img" + i;
+					document.getElementById("images").appendChild(img);
+					let path = images[i].path;
+					document.getElementById("img" + i).addEventListener("click", function() {
+						showImage(path);
+					});
+                    
+					if (i % 3 == 2 && i != 0) {
+						let br = document.createElement("BR");
+						document.getElementById("images").appendChild(br);
+					}
+				}
 			}
 		}
 		xmlhttp.open("GET", "rest/tag/" + tag, true);
@@ -81,6 +68,47 @@
 	function getContextPath() {
 		return window.location.pathname.substring(0, window.location.pathname
 				.indexOf("/", 2));
+	}
+
+	function showImage(imagePath) {
+		var xmlhttp;
+		xmlhttp = getXmlhttp();
+		
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				let text = xmlhttp.responseText;
+				let image = JSON.parse(text);
+				let html = "<p>Image name: " + image.name + "</p>";
+				html += "<p>Image tags: ";
+				for (let i = 0; i < image.tags.length; i++) {
+					if (i != 0) {
+						html += ", ";
+					}
+					html += image.tags[i];
+				}
+				html += "</p>";
+				html += "<img src=\"" + getContextPath() + "/image/"
+						+ image.path + "\">";
+				document.getElementById("images").innerHTML = html;
+			}
+		}
+
+		xmlhttp.open("GET", "rest/image/" + imagePath, true);
+		
+		xmlhttp.send();
+	}
+
+	function getXmlhttp() {
+		var xmlhttp;
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {
+			// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		return xmlhttp;
 	}
 </script>
 </head>
@@ -93,9 +121,7 @@
 		</script>
 	</div>
 
-	<div id="images">
-		<p>test</p>
-	</div>
+	<div id="images"></div>
 	<div id="test"></div>
 
 </body>

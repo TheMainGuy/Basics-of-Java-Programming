@@ -11,8 +11,19 @@ import java.util.List;
  *
  */
 public class Image {
+  /**
+   * Image path.
+   */
   private Path path;
+  
+  /**
+   * List of image tags.
+   */
   private List<String> tags;
+  
+  /**
+   * Image name.
+   */
   private String name;
 
   public Image(Path path, List<String> tags, String name) {

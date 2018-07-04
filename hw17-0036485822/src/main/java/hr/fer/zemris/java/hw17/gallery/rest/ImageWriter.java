@@ -13,7 +13,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-import com.google.gson.Gson;
+import org.json.JSONObject;
 
 import hr.fer.zemris.java.hw17.gallery.model.Image;
 
@@ -30,8 +30,11 @@ public class ImageWriter implements MessageBodyWriter<Image> {
   public void writeTo(Image image, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType,
       MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
       throws IOException, WebApplicationException {
-    Gson gson = new Gson();
-    entityStream.write(gson.toJson(image).toString().getBytes(StandardCharsets.UTF_8));
+    JSONObject imageJSON = new JSONObject();
+    imageJSON.put("name", image.getName());
+    imageJSON.put("path", image.getPath().getFileName());
+    imageJSON.put("tags", image.getTags());
+    entityStream.write(imageJSON.toString().getBytes(StandardCharsets.UTF_8));
   }
 
 }
