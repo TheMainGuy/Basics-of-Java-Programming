@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import hr.fer.zemris.java.hw16.jvdraw.objects.Circle;
 import hr.fer.zemris.java.hw16.jvdraw.objects.FilledCircle;
+import hr.fer.zemris.java.hw16.jvdraw.objects.FilledPolygon;
 import hr.fer.zemris.java.hw16.jvdraw.objects.Line;
 
 /**
@@ -50,6 +51,21 @@ public class GeometricalObjectPainter implements GeometricalObjectVisitor {
     g2d.fillOval(x, y, filledCircle.getRadius() * 2, filledCircle.getRadius() * 2);
     g2d.setColor(filledCircle.getColor());
     g2d.drawOval(x, y, filledCircle.getRadius() * 2, filledCircle.getRadius() * 2);
+  }
+
+  @Override
+  public void visit(FilledPolygon filledPolygon) {
+    int n = filledPolygon.getCoordinates().size();
+    int[] x = new int[n];
+    int[] y = new int[n];
+    for(int i = 0; i < filledPolygon.getCoordinates().size(); i++) {
+      x[i] = filledPolygon.getCoordinates().get(i).getX();
+      y[i] = filledPolygon.getCoordinates().get(i).getY();
+    }
+    g2d.setColor(filledPolygon.getFillColor());
+    g2d.fillPolygon(x, y, n);
+    g2d.setColor(filledPolygon.getColor());
+    g2d.drawPolygon(x, y, n);
   }
 
 }

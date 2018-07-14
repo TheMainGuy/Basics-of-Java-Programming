@@ -10,7 +10,9 @@ import java.util.List;
 
 import hr.fer.zemris.java.hw16.jvdraw.model.DrawingModel;
 import hr.fer.zemris.java.hw16.jvdraw.objects.Circle;
+import hr.fer.zemris.java.hw16.jvdraw.objects.Coordinate;
 import hr.fer.zemris.java.hw16.jvdraw.objects.FilledCircle;
+import hr.fer.zemris.java.hw16.jvdraw.objects.FilledPolygon;
 import hr.fer.zemris.java.hw16.jvdraw.objects.GeometricalObject;
 import hr.fer.zemris.java.hw16.jvdraw.objects.Line;
 
@@ -72,6 +74,17 @@ public class Util {
         Circle c = (Circle) object;
         lines.add(new String("CIRCLE " + c.getX() + " " + c.getY() + " " + c.getRadius() + " " + c.getColor().getRed()
             + " " + c.getColor().getGreen() + " " + c.getColor().getBlue()));
+      } else if(object instanceof FilledPolygon) {
+        FilledPolygon fp = (FilledPolygon) object;
+        StringBuilder sb = new StringBuilder("FPOLY ");
+        sb.append(fp.getCoordinates().size()).append(" ");
+        for (int j = 0; j < fp.getCoordinates().size(); j++) {
+          sb.append(fp.getCoordinates().get(j).getX()).append(" ").append(fp.getCoordinates().get(j).getY())
+              .append(" ");
+        }
+        sb.append(fp.getColor().getRed() + " " + fp.getColor().getGreen() + " " + fp.getColor().getBlue() + " "
+            + fp.getFillColor().getRed() + " " + fp.getFillColor().getGreen() + " " + fp.getFillColor().getBlue());
+        lines.add(sb.toString());
       }
     }
 
@@ -127,6 +140,15 @@ public class Util {
             new Color(Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), Integer.parseInt(parts[6])),
             Integer.parseInt(parts[3]),
             new Color(Integer.parseInt(parts[7]), Integer.parseInt(parts[8]), Integer.parseInt(parts[9]))));
+      } else if(parts[0].equals("FPOLY")) {
+        List<Coordinate> coos = new ArrayList<>();
+        int n = Integer.parseInt(parts[1]);
+        for (int i = 0; i < n; i++) {
+          coos.add(new Coordinate(Integer.parseInt(parts[2 + i * 2]), Integer.parseInt(parts[3 + i * 2])));
+        }
+        drawingModel.add(new FilledPolygon(0, 0,
+            new Color(Integer.parseInt(parts[n * 2 + 2]), Integer.parseInt(parts[n * 2 + 3]), Integer.parseInt(parts[n * 2 + 4])), coos,
+            new Color(Integer.parseInt(parts[n * 2 + 5]), Integer.parseInt(parts[n * 2 + 6]), Integer.parseInt(parts[n * 2 + 7]))));
       }
     }
   }

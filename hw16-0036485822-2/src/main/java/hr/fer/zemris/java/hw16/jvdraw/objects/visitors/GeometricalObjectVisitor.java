@@ -2,6 +2,7 @@ package hr.fer.zemris.java.hw16.jvdraw.objects.visitors;
 
 import hr.fer.zemris.java.hw16.jvdraw.objects.Circle;
 import hr.fer.zemris.java.hw16.jvdraw.objects.FilledCircle;
+import hr.fer.zemris.java.hw16.jvdraw.objects.FilledPolygon;
 import hr.fer.zemris.java.hw16.jvdraw.objects.Line;
 
 /**
@@ -31,4 +32,6 @@ public interface GeometricalObjectVisitor {
    * @param filledCircle filled circle to be visited
    */
   public abstract void visit(FilledCircle filledCircle);
+  
+  public abstract void visit(FilledPolygon filledPolygon);
 }

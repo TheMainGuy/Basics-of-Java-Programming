@@ -24,7 +24,7 @@ public abstract class ToolImpl implements Tool {
   /**
    * Reference to drawing canvas.
    */
-  private JDrawingCanvas drawingCanvas;
+  protected JDrawingCanvas drawingCanvas;
   
   /**
    * Reference to drawing model.
@@ -79,6 +79,7 @@ public abstract class ToolImpl implements Tool {
 
   @Override
   public void mouseClicked(MouseEvent e) {
+    
   }
 
   @Override

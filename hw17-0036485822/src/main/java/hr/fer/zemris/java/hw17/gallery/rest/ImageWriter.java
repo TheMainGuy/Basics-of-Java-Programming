@@ -17,6 +17,14 @@ import org.json.JSONObject;
 
 import hr.fer.zemris.java.hw17.gallery.model.Image;
 
+/**
+ * Class used to convert single image to JSON string. Method isWriteable is used
+ * to define which type of data this class can convert to JSON. Method writeTo
+ * converts given image to JSON string whenever requested by jersey servlet.
+ * 
+ * @author tin
+ *
+ */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 public class ImageWriter implements MessageBodyWriter<Image> {

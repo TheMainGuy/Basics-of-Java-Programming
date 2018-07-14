@@ -32,6 +32,8 @@
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID"/>
 		<item value="false" key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID"/>
 		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw17-0036485822.zip"/>
+			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/ispit.zip"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw15-0036485822.zip"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw16-0036485822-2.zip"/>
 			<item value="/home/tin/eclipse-workspace/opjj2018/homework1/hw16-0036485822-1.zip"/>

@@ -21,13 +21,23 @@ import com.google.gson.reflect.TypeToken;
 
 import hr.fer.zemris.java.hw17.gallery.model.Image;
 
+/**
+ * Class used to convert list of images to JSON string. Method isWriteable is
+ * used to define which type of data this class can convert to JSON. Method
+ * writeTo converts given imageList to JSON string whenever requested by jersey
+ * servlet.
+ * 
+ * @author tin
+ *
+ */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 public class ImageListWriter implements MessageBodyWriter<List<Image>> {
 
   @Override
   public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-    return type == ArrayList.class && genericType.equals(new TypeToken<List<Image>>() {}.getType());
+    return type == ArrayList.class && genericType.equals(new TypeToken<List<Image>>() {
+    }.getType());
   }
 
   @Override
@@ -37,7 +47,7 @@ public class ImageListWriter implements MessageBodyWriter<List<Image>> {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("[");
     boolean isFirst = true;
-    for(Image image : imageList) {
+    for (Image image : imageList) {
       if(isFirst) {
         isFirst = false;
       } else {

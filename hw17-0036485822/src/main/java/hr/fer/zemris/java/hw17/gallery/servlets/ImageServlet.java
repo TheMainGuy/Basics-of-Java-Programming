@@ -8,8 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet which, when its doGet method is called, reads requested file from
+ * {@link HttpServletRequest} object and sends it using response output stream.
+ * Uses {@link Util#sendImage(HttpServletResponse, String)} method to send
+ * image.
+ * 
+ * @author tin
+ *
+ */
 @WebServlet("/image/*")
-public class ImageServlet extends HttpServlet{
+public class ImageServlet extends HttpServlet {
 
   /**
    * 

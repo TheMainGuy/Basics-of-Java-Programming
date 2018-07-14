@@ -1,9 +1,12 @@
 package hr.fer.zemris.java.hw16.jvdraw.objects.visitors;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import hr.fer.zemris.java.hw16.jvdraw.objects.Circle;
+import hr.fer.zemris.java.hw16.jvdraw.objects.Coordinate;
 import hr.fer.zemris.java.hw16.jvdraw.objects.FilledCircle;
+import hr.fer.zemris.java.hw16.jvdraw.objects.FilledPolygon;
 import hr.fer.zemris.java.hw16.jvdraw.objects.Line;
 
 /**
@@ -16,10 +19,11 @@ import hr.fer.zemris.java.hw16.jvdraw.objects.Line;
  */
 public class GeometricalObjectBBCalculator implements GeometricalObjectVisitor {
   /**
-   * Flag which is set to false after first object is used to calculate bounding box.
+   * Flag which is set to false after first object is used to calculate bounding
+   * box.
    */
   boolean firstObject = true;
-  
+
   /**
    * Leftmost coordinate.
    */
@@ -56,6 +60,41 @@ public class GeometricalObjectBBCalculator implements GeometricalObjectVisitor {
   public void visit(FilledCircle filledCircle) {
     updateBoundingBox(filledCircle.getX() - filledCircle.getRadius(), filledCircle.getY() - filledCircle.getRadius(),
         filledCircle.getX() + filledCircle.getRadius(), filledCircle.getY() + filledCircle.getRadius());
+  }
+
+  @Override
+  public void visit(FilledPolygon filledPolygon) {
+    List<Coordinate> coos = filledPolygon.getCoordinates();
+    boolean f = true;
+    int l = 0;
+    int t = 0;
+    int r = 0;
+    int b = 0;
+    for (int i = 0; i < coos.size(); i++) {
+      Coordinate co = coos.get(i);
+      if(f) {
+        f = false;
+        l = co.getX();
+        r = l;
+        t = co.getY();
+        b = t;
+      } else {
+        if(co.getX() < l) {
+          l = co.getX();
+        }
+        if(co.getX() > r) {
+          r = co.getX();
+        }
+        if(co.getY() < t) {
+          t = co.getY();
+        }
+        if(co.getY() > b) {
+          b = co.getY();
+        }
+      }
+    }
+    
+    updateBoundingBox(l, t, r, b);
   }
 
   /**

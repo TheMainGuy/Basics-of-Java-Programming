@@ -9,7 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("thumbnail/*")
+/**
+ * Servlet which, when its doGet method is called, reads requested file from
+ * {@link HttpServletRequest} object and sends its thumbnail using response
+ * output stream.
+ * 
+ * If thumbnail directory does not exist, creates it. If requested thumbnail
+ * does not exist, uses {@link Util#createThumbnail(String, File)} method to
+ * create it.
+ * 
+ * After checking for thumbnail file and creating it if necessary, sends
+ * thumbnail file using {@link Util#sendImage(HttpServletResponse, String)}
+ * method.
+ * 
+ * @author tin
+ *
+ */
+@WebServlet("/thumbnail/*")
 public class ThumbnailServlet extends HttpServlet {
 
   /**
@@ -28,7 +44,6 @@ public class ThumbnailServlet extends HttpServlet {
     if(!thumbnailFile.exists()) {
       Util.createThumbnail(fileName, thumbnailFile);
     }
-    System.out.println("Sending thumbnail " + fileName);
     Util.sendImage(resp, thumbnailFile.getAbsolutePath().toString());
   }
 }

@@ -18,13 +18,23 @@ import javax.ws.rs.ext.Provider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Class used to convert tags to JSON string. Method isWriteable is used to
+ * define which type of data this class can convert to JSON. Method writeTo
+ * converts given list of tags to JSON string whenever requested by jersey
+ * servlet.
+ * 
+ * @author tin
+ *
+ */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
 public class TagWriter implements MessageBodyWriter<List<String>> {
 
   @Override
   public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-    return type == ArrayList.class && genericType.equals(new TypeToken<List<String>>() {}.getType());
+    return type == ArrayList.class && genericType.equals(new TypeToken<List<String>>() {
+    }.getType());
   }
 
   @Override

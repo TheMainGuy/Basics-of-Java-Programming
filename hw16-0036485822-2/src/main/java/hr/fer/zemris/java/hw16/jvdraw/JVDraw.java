@@ -2,6 +2,7 @@ package hr.fer.zemris.java.hw16.jvdraw;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -42,6 +43,7 @@ import hr.fer.zemris.java.hw16.jvdraw.objects.GeometricalObject;
 import hr.fer.zemris.java.hw16.jvdraw.objects.editors.GeometricalObjectEditor;
 import hr.fer.zemris.java.hw16.jvdraw.tools.CircleTool;
 import hr.fer.zemris.java.hw16.jvdraw.tools.FilledCircleTool;
+import hr.fer.zemris.java.hw16.jvdraw.tools.FilledPolyTool;
 import hr.fer.zemris.java.hw16.jvdraw.tools.LineTool;
 import hr.fer.zemris.java.hw16.jvdraw.tools.Tool;
 
@@ -143,19 +145,23 @@ public class JVDraw extends JFrame {
     LineTool lineTool = new LineTool(drawingModel, (IColorProvider) colorArea1, drawingCanvas);
     CircleTool circleTool = new CircleTool(drawingModel, colorArea1, drawingCanvas);
     FilledCircleTool filledCircleTool = new FilledCircleTool(drawingModel, colorArea1, drawingCanvas, colorArea2);
+    FilledPolyTool filledPolyTool = new FilledPolyTool(drawingModel, colorArea1, drawingCanvas, colorArea2);
     currentState = lineTool;
     drawingCanvas.setCurrentState(currentState);
     JButton lineButton = new JButton("Line");
     JButton circleButton = new JButton("Circle");
     JButton filledCircleButton = new JButton("Filled Circle");
+    JButton polyButton = new JButton("Polygon");
     ButtonGroup buttonGroup = new ButtonGroup();
     buttonGroup.add(lineButton);
     buttonGroup.add(circleButton);
     buttonGroup.add(filledCircleButton);
+    buttonGroup.add(polyButton);
     toolBar.addSeparator();
     toolBar.add(lineButton);
     toolBar.add(circleButton);
     toolBar.add(filledCircleButton);
+    toolBar.add(polyButton);
     CustomMouseListener mouseListener = new CustomMouseListener(currentState);
     lineButton.addActionListener(new ActionListener() {
 
@@ -181,6 +187,15 @@ public class JVDraw extends JFrame {
         drawingCanvas.setCurrentState(filledCircleTool);
       }
     });
+    polyButton.addActionListener(new ActionListener() {
+      
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        mouseListener.setCurrentState(filledPolyTool);
+        drawingCanvas.setCurrentState(filledPolyTool);
+      }
+    });
+
 
     drawingCanvas.addMouseListener(mouseListener);
     drawingCanvas.addMouseMotionListener(mouseListener);
@@ -189,7 +204,7 @@ public class JVDraw extends JFrame {
 
     DrawingObjectListModel listModel = new DrawingObjectListModel(drawingModel);
     JList<GeometricalObject> list = new JList<>(listModel);
-
+    list.setMaximumSize(new Dimension(150, 1000));
     list.addKeyListener(new KeyListener() {
 
       @Override
